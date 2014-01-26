@@ -54,15 +54,15 @@ function tree_doKeyPress ( code ) {
 		}
 		
 		var r = Entities.types['roots_01'].clone();
-		r.position.x = this.position.x;
-		r.position.y = this.position.y;
+		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
+		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
 		entities.push(r);
 		
 		var rn = [];
 		for( var i = 0; i < 4; i++){
 			rn.push(Entities.types['rootNode'].clone());
-			rn[i].position.y = this.position.y + 20;
-			rn[i].position.x = this.position.x + (i-2) * 50;
+			rn[i].position.y = this.position.y + 40;
+			rn[i].position.x = this.position.x + (i-1.5) * 63;
 			entities.push(rn[i]);
 		}
 		
