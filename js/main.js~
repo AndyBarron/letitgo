@@ -78,9 +78,7 @@ var delta = 0;
 ////////////////////////////////////////
 
 var sn = Entities.types['sun'].clone();
-sn.position = {x: 700, y: 100};
-var noob = Entities.types ['cloud'].clone();
-noob.position = {x: Math.random() * MAX_X, y: 125};
+sn.position = {x: 700, y: 100}
 var bird = Entities.types['bird'].clone();
 bird.position = {x: 200, y: 200};
 var squirrel = Entities.types['squirrel'].clone();

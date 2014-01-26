@@ -51,37 +51,4 @@ Entities.init = function()
 		updateActive: function(){}
 	});
 
-    Entities.types['tree'] = new Entity({
-	id : 1,
-	name : 'tree',
-	doKeyPress: tree_doKeyPress,
-	updateIdle: function(){},
-	updateActive: function(){}
-    });
-
-    Entities.types['acorn'] = new Entity({
-	id:1,
-	name : 'acorn',
-	doKeyPress: tree_doKeyPress,
-	updateIdle:function(){},
-	updateActive:function(){}
-    });
-
-    Entities.types['cloud'] = new Entity({
-	id: 4,
-	name: 'cloud',
-	doKeyPress: cloud_doKeyPress,
-	updateIdle : cloud_updateIdle,
-	updateActive: cloud_updateActive
-    });
-
-    Entities.types['flowers'] = new Entity({
-	id:8965,
-	name : 'flowers',
-	doKeyPress: function(){},
-	updateIdle: flowers_updateIdle,
-	updateActive: function(){}
-    });
-
-
 }
