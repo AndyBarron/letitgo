@@ -22,6 +22,26 @@ Entities.names = [
 	'storm'
 ];
 
+Entities.sizes = {
+	'squirrel': 64*64,
+	'bird': 64*64,
+	'tree': 200*400,
+	'acorn': 40*40,
+	'sprout': 200*200,
+	'sapling': 200*300,
+	'sun': 75*75,
+	'cloud': 200*75,
+	'sky_blue': 800*600,
+	'sky_dark': 800*600,
+	'ground': 800*600,
+	'ray': 100*100,
+	'roots_01': 100*100,
+	'roots_02': 100*100,
+	'roots_03': 100*100,
+	'rain': 50*50,
+	'storm': 200*75
+};
+
 Entities.types = {};
 
 Entities.init = function()

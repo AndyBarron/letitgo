@@ -293,6 +293,8 @@ Graphics.init = function() {
 			if (!exists(Graphics.files[id]))
 				Graphics.files[id] = {};
 
+			if (name == 'tree') spr.anchor = 7;
+
 			Graphics.fileCount++;
 			Graphics.fileList.push(spr);
 			Graphics.files[id][name] = spr;
@@ -306,22 +308,31 @@ Graphics.scaleSprites = function(){
 	var ids = Entities.ids;
 	var names = Entities.names;
 
+
+
 	for(var n = 0; n < names.length; n++)
 	{
-		var total = 0;
-		for(var k = 0; k < ids.length; k++)
+		var nm = names[n];
+		var targetArea = Entities.sizes[nm];
+
+		if(!exists(targetArea))
 		{
-			var spr = Graphics.files[k][names[n]];
-			var area = spr.getWidth()*spr.getHeight();
-			total += area;
+			var total = 0;
+			for(var k = 0; k < ids.length; k++)
+			{
+				var spr = Graphics.files[k][nm];
+				var area = spr.getWidth()*spr.getHeight();
+				total += area;
+			}
+			var avg = total/ids.length;
+			targetArea = avg;
 		}
-		var avg = total/ids.length;
 
 		for(var m = 0; m < ids.length; m++)
 		{
-			var spr = Graphics.files[m][names[n]];
+			var spr = Graphics.files[m][nm];
 			var area = spr.getWidth()*spr.getHeight();
-			var ratio = avg / area;
+			var ratio = targetArea / area;
 			spr.scale = Math.sqrt(ratio);
 		}
 	}
