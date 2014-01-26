@@ -35,10 +35,10 @@ Entities.sizes = {
 	'sky_blue': 800*600,
 	'sky_dark': 800*600,
 	'ground': 800*600,
-	'ray': 100*100,
+	'ray': 30*30,
 	'roots_01': 100*100,
 	'roots_02': 100*100,
-	'roots_03': 100*100,
+	'roots_03': 150*150,
 	'rain': 50*50,
 	'storm': 250*100,
 	'rootNode': 30*30
@@ -81,7 +81,7 @@ Entities.init = function()
 		name: 'sun',
 		doKeyPress: sun_doKeyPress,
 		updateIdle: function(){},
-		updateActive: function(){},
+		updateActive: sun_updateActive,
 		initData: sun_initData,
 		clickable: true
 	});
