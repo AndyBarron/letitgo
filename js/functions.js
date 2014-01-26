@@ -14,7 +14,7 @@ function squirrel_doKeyPress ( code ){
 	else if(this.data.hasAcorn)
 	    this.data.acorn.position.x += 10;
     }else if ( code == KEY_SPACE){
-	//squirrel drops acorn or else tries to pick one up and Thomas is dumb
+	//squirrel drops acorn or else tries to pick one up
 	if ( this.data.hasAcorn){
 	    this.data.hasAcorn = false;
 	    this.data.acorn.position.y += 40;

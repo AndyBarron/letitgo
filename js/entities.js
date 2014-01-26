@@ -40,7 +40,7 @@ Entities.sizes = {
 	'roots_02': 100*100,
 	'roots_03': 100*100,
 	'rain': 50*50,
-	'storm': 200*75
+	'storm': 200*75,
 	'rootNode': 30*30
 };
 
