@@ -159,7 +159,7 @@ function tree_doKeyPress ( code ) {
 	    }
 	    
 	    var r = Entities.types['roots_03'].clone();
-		r.position.x = this.position.x-18;
+		r.position.x = this.position.x-16;
 		//+this.sprites[activeEntity.id].getWidth()/2;
 		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight()/6+24;
 		entities.push(r);
