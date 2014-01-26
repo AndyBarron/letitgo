@@ -254,14 +254,19 @@ function cloud_doKeyPress(code) {
 			var myHeight = 30;
 			var rainHeight = 10;
 			
-			var rainEnt = new Entity({doKeyPress: emptyFunction, updateIdle: rain_updateIdle, updateActive: emptyFunction, drawPost: emptyFunction, active: false, id: 68546, name: "Rain"});
-			//var tqqqqqq = new Entity({doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:false, id:this.id, name:"acorn"});
+			var rainEnt = new Entity({doKeyPress: emptyFunction,
+									updateIdle: rain_updateIdle,
+									updateActive: emptyFunction,
+									drawPost: emptyFunction,
+									active: false,
+									id: 68546,
+									name: "Rain"});
 										
 			rainEnt.position.x = this.position.x;
 			rainEnt.position.y = this.position.y + this.sprites[activeEntity.id].getHeight()/2 + rainHeight/2;
 			rainEnt.data.startingY = rainEnt.position.y;
 			rainEnt.data.makeRainAbove = true;
-			entities.add(rainEnt);
+			entities.push(rainEnt);
 		}
 		
 }
@@ -323,7 +328,7 @@ function rain_updateIdle() {
 			rainEnt.position.y = this.position.y - myHeight;
 			rainEnt.data.startingY = rainEnt.position.y;
 			rainEnt.data.makeRainAbove = true;
-			entities.add(rainEnt);
+			entities.push(rainEnt);
 	}
 	
 	if(this.position.x < MIN_X || this.position.y < MIN_Y || this.position.x > MAX_X || this.position.y > MAX_Y) {
@@ -361,7 +366,7 @@ function rootNode_updateIdle() {
 		
 		for(var i = 0; i < entities.length; i++) {
 			if(entities[i].name == "rain") {
-				rainEnts.add(entities[i]);
+				rainEnts.push(entities[i]);
 			}
 		}
 		

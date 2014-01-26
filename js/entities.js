@@ -70,11 +70,19 @@ Entities.init = function()
     Entities.types['cloud'] = new Entity({
 	id: 4,
 	name: 'cloud',
+	doKeyPress: function() {},
+	updateIdle : cloud_updateIdle,
+	updateActive: function() {}
+    });
+	
+	Entities.types['storm'] = new Entity({
+	id: 4,
+	name: 'storm',
 	doKeyPress: cloud_doKeyPress,
 	updateIdle : cloud_updateIdle,
 	updateActive: cloud_updateActive
     });
-
+	
     Entities.types['flowers'] = new Entity({
 	id:8965,
 	name : 'flowers',
