@@ -240,12 +240,14 @@ function cloud_doKeyPress(code) {
 		var mySpeed = CLOUD_MOVE_SPEED;
 		
 		if(code === KEY_LEFT || code === KEY_A) {
-			if((this.position.x - mySpeed) > MIN_X)
-				this.position.x -= mySpeed;
+			this.data.velocity_x = -1*mySpeed;
+			/*if((this.position.x - mySpeed) > MIN_X)
+				this.position.x -= mySpeed;*/
 		}
 		if(code === KEY_RIGHT || code === KEY_D) {
-			if(this.position.x + mySpeed < MAX_X)
-				this.position.x += mySpeed;
+			this.data.velocity_x = mySpeed;
+			/*if(this.position.x + mySpeed < MAX_X)
+				this.position.x += mySpeed;*/
 		}
 		
 		if(code === KEY_SPACE) {
@@ -270,15 +272,16 @@ function cloud_doKeyPress(code) {
 }
 
 function cloud_updateIdle() {
-
-	var addAmt = Math.random()*CLOUD_MOVE_SPEED/3;
-	var maxVel = CLOUD_MOVE_SPEED;
 	
-	if(this.data.velocity_x < 0) addAmt *= -1;
+	var addAmt = Math.random()*CLOUD_MOVE_SPEED/5;
+	var maxVel = CLOUD_MOVE_SPEED/3;
 	
-	/*if(Math.random() < 0.1) {
-		addAmt *= -1;
-	}*/
+	if(Math.random() < 0.1) {
+		this.data.accelLeft = !this.data.accelLeft;
+	}
+	
+	if(this.data.accelLeft) addAmt *= -1;
+	
 	
 	if(Math.abs(this.data.velocity_x) > maxVel) {
 		if(this.data.velocity_x > 0) {
@@ -290,11 +293,12 @@ function cloud_updateIdle() {
 	
 	this.data.velocity_x += addAmt;
 	var newLoc = (this.position.x + this.data.velocity_x);
-	
 	if( newLoc < MAX_X && newLoc > MIN_X )
 		this.position.x += this.data.velocity_x;
-	else
+	else {
 		this.data.velocity_x *= -1;
+		this.data.accelLeft = !this.data.accelLeft;
+	}
 }
 
 function cloud_updateActive() {
@@ -305,6 +309,7 @@ function cloud_updateActive() {
 
 function cloud_initData() {
 	this.data.velocity_x = 0;
+	this.data.accelLeft = false;
 }
 
 function emptyFunction() {}

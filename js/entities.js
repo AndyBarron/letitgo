@@ -72,7 +72,8 @@ Entities.init = function()
 	name: 'cloud',
 	doKeyPress: function() {},
 	updateIdle : cloud_updateIdle,
-	updateActive: function() {}
+	updateActive: cloud_updateIdle,
+	initData: cloud_initData
     });
 	
 	Entities.types['storm'] = new Entity({
@@ -80,7 +81,8 @@ Entities.init = function()
 	name: 'storm',
 	doKeyPress: cloud_doKeyPress,
 	updateIdle : cloud_updateIdle,
-	updateActive: cloud_updateActive
+	updateActive: cloud_updateActive,
+	initData: cloud_initData
     });
 	
     Entities.types['flowers'] = new Entity({
