@@ -88,8 +88,8 @@ function tree_doKeyPress ( code ) {
 	
 	if(code == KEY_SPACE && this.data.nodesWatered == 4){
 	    var t = new Entity(
-	    	clickable: true,
-	    	{initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;},
+	    	{clickable: true,
+	    	initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;},
 	    	doKeyPress : tree_doKeyPress,
 	    	updateIdle:this.updateIdle,
 	    	updateActive: this.updateActive,
