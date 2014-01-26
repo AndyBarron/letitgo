@@ -42,7 +42,7 @@ function tree_doKeyPress ( code ) {
 		this.position.y -= 1;
 		this.position.x += (Math.random()-1)*0.01;
 	    }else{
-		 var t = new Entity({doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sprout"});
+		 var t = new Entity({initData:function(){this.data.nodesWatered = 0;},doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sprout"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 		
@@ -74,7 +74,7 @@ function tree_doKeyPress ( code ) {
     
     }else if (this.name == "sprout"){
 	if(code == KEY_SPACE && this.data.nodesWatered == 4){
-	    var t = new Enitity({doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sapling"});
+	    var t = new Enitity({initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;}, doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sapling"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 	    this.removed = true;
