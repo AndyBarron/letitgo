@@ -139,10 +139,10 @@ function processClick(coords)
 	{
 		var i = entities.length - 1 - j;
 		var ent = entities[i];
-		if (ent == activeEntity) continue;
+		if (ent.clickable == false || ent == activeEntity) continue;
 
 		var hit = ent.hit(id,coords.x,coords.y);
-		if ( hit && ent.id > -1 && ent.id < MAX_ID)
+		if ( hit )
 		{
 			playSwitchSound(ent.name);
 			activeEntity = ent;

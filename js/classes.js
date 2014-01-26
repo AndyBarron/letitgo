@@ -6,6 +6,7 @@ function Entity ( options )
 	this.updateIdle = options.updateIdle; //Function that determines idle behavior - takes deltaT
 	this.updateActive = options.updateActive; //also takes deltaT
 	this.drawPost = options.drawPost; // post-processing if necessary
+	this.clickable = (exists(options.clickable) && options.clickable == true);
 
 	this.left = false;
 	this.active = false;
@@ -21,10 +22,8 @@ function Entity ( options )
 		this.sprites[id] = spr;
 	}
 
-	if(exists(options.initData))
-	{
-		options.initData.call(this);
-	}
+	this.initData = (exists(options.initData)) ? options.initData : function(){};
+	this.initData();
 
 	if(exists(options.doCollide))
 	{

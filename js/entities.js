@@ -54,6 +54,7 @@ Entities.init = function()
 		doKeyPress: squirrel_doKeyPress,
 		updateIdle: squirrel_updateIdle,
 		updateActive: function(){},
+		clickable: true
 	});
 	
 	Entities.types['rain'] = new Entity({
@@ -71,7 +72,8 @@ Entities.init = function()
 		doKeyPress: bird_doKeyPress,
 		updateIdle: bird_updateIdle,
 		updateActive: bird_updateActive,
-		initData: bird_initData
+		initData: bird_initData,
+		clickable: true
 	});
 
 	Entities.types['sun'] = new Entity({
@@ -79,42 +81,47 @@ Entities.init = function()
 		name: 'sun',
 		doKeyPress: sun_doKeyPress,
 		updateIdle: function(){},
-		updateActive: function(){}
-		initData: sun_initData;
+		updateActive: function(){},
+		initData: sun_initData,
+		clickable: true
 	});
 
     Entities.types['tree'] = new Entity({
-	id : 1,
-	name : 'tree',
-	doKeyPress: tree_doKeyPress,
-	updateIdle: function(){},
-	updateActive: function(){}
+		id : 1,
+		name : 'tree',
+		doKeyPress: tree_doKeyPress,
+		updateIdle: function(){},
+		updateActive: function(){},
+		clickable: true
     });
 
     Entities.types['acorn'] = new Entity({
-	id:1,
-	name : 'acorn',
-	doKeyPress: tree_doKeyPress,
-	updateIdle:function(){},
-	updateActive:function(){}
+		id:1,
+		name : 'acorn',
+		doKeyPress: tree_doKeyPress,
+		updateIdle:function(){},
+		updateActive:function(){},
+		clickable: true
     });
 
     Entities.types['cloud'] = new Entity({
-	id: 4,
-	name: 'cloud',
-	doKeyPress: function() {},
-	updateIdle : cloud_updateIdle,
-	updateActive: cloud_updateIdle,
-	initData: cloud_initData
+		id: 4,
+		name: 'cloud',
+		doKeyPress: function() {},
+		updateIdle : cloud_updateIdle,
+		updateActive: cloud_updateIdle,
+		initData: cloud_initData,
+		clickable: true
     });
 	
 	Entities.types['storm'] = new Entity({
-	id: 4,
-	name: 'storm',
-	doKeyPress: cloud_doKeyPress,
-	updateIdle : cloud_updateIdle,
-	updateActive: cloud_updateActive,
-	initData: cloud_initData
+		id: 4,
+		name: 'storm',
+		doKeyPress: cloud_doKeyPress,
+		updateIdle : cloud_updateIdle,
+		updateActive: cloud_updateActive,
+		initData: cloud_initData,
+		clickable: true
     });
 	
     Entities.types['flowers'] = new Entity({
@@ -150,11 +157,12 @@ Entities.init = function()
 	});
 
 	Entities.types['rootNode'] = new Entity({
-	id:177,
-	name : 'rootNode',
-	doKeyPress : function(){},
-	updateIdle : rootNode_updateIdle,
-	updateActive : function(){}
+		id:177,
+		name : 'rootNode',
+		doKeyPress : function(){},
+		updateIdle : rootNode_updateIdle,
+		updateActive : function(){},
+		clickable: true
 	});
 
 }
