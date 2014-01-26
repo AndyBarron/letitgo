@@ -170,11 +170,17 @@ function sun_doKeyPress( code ){
 		this.data.target.position.y += 10;
     }else if  (code == KEY_SPACE){
 		for(var i = 0; i < entities.length; i++){
-	    	if(entities[i].name == "sapling" && distance(entities[i], this) < 27){
+	    	if(entities[i].name == "sapling" && distance(entities[i], this.data.target) < 27){
 			entities[i].data.havingBeenShined = true;
 		    }
 		}
     }
+}
+
+function sun_initData (){
+	var ray = new Entity({name:"ray", id:84343, updateIdle:emptyFunction, updateActive:emptyFunction, initData:emptyFunction, doKeyPress:emptyFunction, drawPost:emptyFunction, active:false});
+	entities.push(ray);
+	this.data.target = ray;
 }
 
 function squirrel_updateIdle(){

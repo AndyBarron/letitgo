@@ -73,7 +73,7 @@ function draw()
 }
 
 Input.init(document,canvas);
-Sounds.init('test.wav','zap.wav');
+Sounds.init('test.wav','zap.wav', 'bird_sound.wav', 'squirrel_sound.wav', 'sun_sound.wav', 'tree_sound.wav', 'wind_sound.wav');
 Graphics.init();
 Entities.init();
 
@@ -106,7 +106,7 @@ squirrel.position = {x: 400, y: GROUND_Y};
 var tree = Entities.types['tree'].clone();
 tree.position = {x:200, y:GROUND_Y};
 var acorn = Entities.types['acorn'].clone();
-acorn.position = {x:700, y:GROUND_Y};
+acorn.position = {x:600, y:GROUND_Y};
 var storm = Entities.types['storm'].clone();
 storm.position = {x: Math.random() * MAX_X, y: 170}
 
@@ -144,10 +144,24 @@ function processClick(coords)
 		var hit = ent.hit(id,coords.x,coords.y);
 		if ( hit && ent.id > -1 && ent.id < MAX_ID)
 		{
-			Sounds.play('zap');
+			playSwitchSound(ent.name);
 			activeEntity = ent;
 			return;
 		}
+	}
+}
+
+function playSwitchSound(name) {
+	if( (name == "cloud") || (name == "storm") ) {
+		Sounds.play('wind_sound');
+	} else if (name == "squirrel") {
+		Sounds.play('squirrel_sound');
+	} else if ( (name == "tree") || (name == "acorn") || (name == "sprout") || (name == "sapling") ) {
+		Sounds.play('tree_sound');
+	} else if ( (name == "bird") ) {
+		Sounds.play('bird_sound');
+	} else if ( (name == "sun") ) {
+		Sounds.play('sun_sound');
 	}
 }
 
