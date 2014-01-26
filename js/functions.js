@@ -73,6 +73,11 @@ function tree_doKeyPress ( code ) {
 	}
     
     }else if (this.name == "sprout"){
+	
+	if( !(this.data.nodesWatered == 4) ) {
+		debug(this.data.nodesWatered);
+	}
+	
 	if(code == KEY_SPACE && this.data.nodesWatered == 4){
 	    var t = new Enitity({initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;}, doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sapling"});
 	    t.position.x = this.position.x;
@@ -418,7 +423,7 @@ function flowers_initDate() {
 }
 
 function rootNode_updateIdle() {
-	var neededRain = 100;
+	var neededRain = 1;
 	if(!this.data.active) {
 		rainEnts = [];
 		
