@@ -467,7 +467,7 @@ function rootNode_doCollide(other)
 {
 	if (other.name == 'rain')
 	{
-		alert('root node received rain!');
+		debug('root node received rain!');
 		other.removed = true;
 		raintAmt++;
 	}
