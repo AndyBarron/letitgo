@@ -77,7 +77,7 @@ Entities.init = function()
 	Entities.types['sun'] = new Entity({
 		id: 3,
 		name: 'sun',
-		doKeyPress: function(){},
+		doKeyPress: sun_doKeyPress,
 		updateIdle: function(){},
 		updateActive: function(){}
 	});
