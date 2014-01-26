@@ -88,7 +88,7 @@ squirrel.position = {x: 400, y: GROUND_Y};
 var tree = Entities.types['tree'].clone();
 tree.position = {x:200, y:GROUND_Y};
 var acorn = Entities.types['acorn'].clone();
-acorn.position = {x:700, y:GROUND_Y};
+acorn.position = {x:600, y:GROUND_Y};
 var storm = Entities.types['storm'].clone();
 storm.position = {x: Math.random() * MAX_X, y: 170}
 
