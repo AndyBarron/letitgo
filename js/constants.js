@@ -1,0 +1,5 @@
+KEY_LEFT = 37;
+KEY_RIGHT = 39;
+KEY_SPACE = 32;
+KEY_A = 65;
+KEY_D = 68;

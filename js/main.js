@@ -1,27 +1,63 @@
 var canvas = document.getElementById("display");
 var context = canvas.getContext("2d");
-var test = loadImage('test')
-
-var x = 0;
+var test = loadImage('test.png')
 
 function update(delta)
 {
-	x += 50*delta;
+	for(var i = 0; i < entities.length; i++)
+	{
+		var ent = entities[i];
+		if (ent == activeEntity) continue;
+
+		ent.updateIdle(delta);
+	}
+
+	activeEntity.updateActive(delta);
+
+	for(var i = 0; i < entities.length; i++)
+	{
+		var ent = entities[i];
+		if(ent.removed){
+			entities.splice(i,1);
+			i--;
+		}
+	}
 }
 
 function draw()
 {
+	// clear rectangle
 	context.fillStyle = "#000000";
 	context.fillRect(0,0,canvas.width,canvas.height);
-	context.drawImage(test,Input.mouse.x-test.width/2,Input.mouse.y-test.height/2);
+
+	// draw everybody
+	for(var i = 0; i < entities.length; i++)
+	{
+		var ent = entities[i];
+		ent.sprites[activeEntity.id].draw(context,{
+			x: ent.position.x,
+			y: ent.position.y
+		});
+	}
+
+	// post process
 }
+
+Input.init(document,canvas);
+Sounds.init('test.wav','zap.wav');
+Graphics.init();
+Entities.init();
 
 var last = new Date();
 var now = new Date();
 var delta = 0;
 
-var entities = [];
-var activeEntity = null;
+var tent = Entities.types['squirrel'];
+tent.position.x = 400;
+tent.position.y = 300;
+
+var entities = [tent];
+var activeEntity = tent;
 
 function doGameLoop()
 {
@@ -35,10 +71,18 @@ function doGameLoop()
 	draw();
 }
 
-Input.init(document,canvas);
+function processKey(code)
+{
+	activeEntity.doKeyPress(code);
+}
 
+///////////////////////
+
+Input.keyPressListeners.push(processKey);
 doGameLoop();
 
-var snd = new Audio('snd/zap.wav');
+///////////////////////
 
-Input.mousePressListeners.push(function(e){var bop = new Audio(snd.src); bop.play();});
+
+//Input.mousePressListeners.push(function(){Sounds.play('zap')});
+//Input.keyPressListeners.push(function(){Sounds.play('zap')});

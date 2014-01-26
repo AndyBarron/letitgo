@@ -1,13 +1,95 @@
 function Entity ( options )
 {
-        this.doKeyPress = options.doKeyPress; //doKey (int)
-        this.sprites = options.sprites; //Image[]
-        this.updateIdle = options.updateIdle; //Function that determines idle behavior - takes deltaT
-        this.updateActive = options.updateActive; //also takes deltaT
-        this.drawPost = options.drawPost; // post-processing if necessary
-        this.active = false;
-        this.id = options.id; //The index in sprite arrays of this object's viewpoint
-        this.name = options.name;
+	this.id = options.id; //The index in sprite arrays of this object's viewpoint
+	this.name = options.name;
+	this.doKeyPress = options.doKeyPress; //doKey (int)
+	this.updateIdle = options.updateIdle; //Function that determines idle behavior - takes deltaT
+	this.updateActive = options.updateActive; //also takes deltaT
+	this.drawPost = options.drawPost; // post-processing if necessary
+
+	this.active = false;
+	this.position = {x:0,y:0};
+	this.data = {};
+	this.removed = false;
+
+	this.sprites = []; //Image[]
+	for(var i = 0; i < Entities.ids.length; i++)
+	{
+		var id = Entities.ids[i];
+		var spr = Graphics.files[id][this.name];
+		this.sprites[id] = spr;
+	}
+}
+
+function Sprite ( filename, options )
+{
+	this.image = loadImage(filename);
+	this.scale = 1;
+
+	var hasOptions = exists(options);
+
+	if(hasOptions)
+	{
+		if (exists(options.anchor)) this.anchor = options.anchor;
+		if (exists(options.scale)) this.scale = options.scale;
+	}
+	else
+	{
+		this.anchor = 4;
+	}
+}
+
+Sprite.prototype.getWidth = function()
+{
+	return this.scale * this.image.width;
+}
+
+Sprite.prototype.getHeight = function()
+{
+	return this.scale * this.image.height;
+}
+
+Sprite.prototype.draw = function( context, options )
+{
+
+	if(!exists(options)) options = {};
+	
+	var x = options.x;
+	var y = options.y;
+
+	var a = this.anchor;
+	var w = this.getWidth();
+	var h = this.getHeight();
+	var hw = w/2;
+	var hh = h/2;
+
+	var anchorLeft = (a == 0 || a == 3 || a == 6);
+	var anchorRight = (a == 2 || a == 5 || a == 8);
+	var anchorTop = (a == 0 || a == 1 || a == 2);
+	var anchorBottom = (a == 6 || a == 7 || a == 8);
+
+	var offX = -hw;
+	if (anchorLeft) offX = 0;
+	else if (anchorRight) offX = -w;
+
+	var offY = -hh;
+	if (anchorTop) offY = 0;
+	else if (anchorBottom) offY = -h;
+
+	if(!exists(x) || !exists(y))
+	{
+		x = 0;
+		y = 0;
+	}
+
+	context.save();
+
+	context.translate(x+offX,y+offY);
+	context.scale(this.scale,this.scale);
+	context.drawImage(this.image,0,0);
+
+	context.restore();
+
 }
 
 function Input () {}
@@ -19,7 +101,7 @@ Input.init = function(keyObject,mouseObject)
 	$(mouseObject).mousedown(Input.mousePress);
 	$(mouseObject).mouseup(Input.mouseRelease);
 	$(mouseObject).mousemove(Input.mouseMove);
-	// $(mouseObject).bind('contextmenu', function(e) { return false; }); 
+	// $(mouseObject).bind('contextmenu', function(e) { return false; });
 }
 
 Input.keysDown = {};
@@ -34,12 +116,13 @@ Input.keyPress = function(e) {
 	{
 		Input.keysDown[code] = true;
 		debug("key press " + code);
+
+		for(var i = 0; i < Input.keyPressListeners.length; i++)
+		{
+			Input.keyPressListeners[i].call(null,code);
+		}
 	}
 
-	for(var i = 0; i < Input.keyPressListeners.length; i++)
-	{
-		Input.keyPressListeners[i].call(null,code);
-	}
 };
 
 Input.keyRelease = function(e) {
@@ -79,4 +162,62 @@ Input.isKeyDown = function(code)
 Input.isKeyUp = function(code)
 {
 	return !Input.isKeyDown(code);
+}
+
+function Sounds () {}
+
+Sounds.files = {};
+
+Sounds.init = function() {
+	for (var i = 0; i < arguments.length; i++)
+	{
+		var sndFilename = arguments[i];
+		var sndName = trimFilename(sndFilename);
+		var snd = new Audio('snd/'+sndFilename);
+		Sounds.files[sndName] = snd;
+	}
+}
+
+Sounds.play = function(name)
+{
+	var sound = Sounds.files[name];
+	if(exists(sound))
+	{
+		(new Audio(sound.src)).play();
+	}
+	else
+	{
+		debug('Sound not found: ' + name);
+	}
+}
+
+function Graphics () {}
+
+Graphics.files = [];
+
+Graphics.init = function() {
+	var ids = Entities.ids;
+	var names = Entities.names;
+
+	for(var i = 0; i < ids.length; i++)
+	{
+		for(var j = 0; j < names.length; j++)
+		{
+			var id = ids[i];
+			var name = names[j];
+			var filename = 'spr/'+ id + '_' + name + '.png';
+			var spr = new Sprite(filename);
+			if(spr.image.isErrorImage)
+			{
+				fallback = 'spr/0_' + name + '.png';
+				debug('could not find image "' + filename + '", using fallback image "' +fallback+ "'");
+				spr = new Sprite(fallback);
+			}
+
+			if (!exists(Graphics.files[id]))
+				Graphics.files[id] = {};
+
+			Graphics.files[id][name] = spr;
+		}
+	}
 }
