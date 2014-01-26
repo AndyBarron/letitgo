@@ -162,7 +162,8 @@ Entities.init = function()
 		doKeyPress : function(){},
 		updateIdle : rootNode_updateIdle,
 		updateActive : function(){},
-		clickable: true
+		clickable: true,
+		doCollide: rootNode_doCollide
 	});
 
 }
