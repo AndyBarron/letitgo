@@ -128,7 +128,7 @@ function tree_doKeyPress ( code ) {
 		if(this.data.right_count - this.data.left_count < 2)
 		    this.data.right_count++;
 	    if(this.data.right_count > 10 && this.data.left_count > 10){
-		var t = new Enitity({doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
+		var t = new Enitity({initData: tree_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 	    var j;
@@ -162,7 +162,7 @@ function tree_doKeyPress ( code ) {
 		    this.data.acorn.position.x += 1;
 		}
 	    }else{
-		var t = new Entity({doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:false, id:this.id, name:"acorn"});
+		var t = new Entity({initData: acorn_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:false, id:this.id, name:"acorn"});
 		t.position.x = this.position.x;
 		t.position.y = this.position.y - 200; // MAGIC NUMBER!!!
 		entities.push(t);
