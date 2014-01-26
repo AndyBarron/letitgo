@@ -82,10 +82,17 @@ function tree_doKeyPress ( code ) {
 		for(var i = 0; i<entities.length; i++) {
 			if(entities[i] == this) {
 				j = i;
-			}else if(entities[i].name == 'rootNode'){
+			}else if(entities[i].name == 'rootNode'||entities[i].name == 'roots_01'){
 				entities[i].removed = true;
 			}
 		}
+		
+		var r = Entities.types['roots_02'].clone();
+		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
+		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+		entities.push(r);
+		
+		
 		entities.splice(j,0,t);
 	}
     }else if (this.name == "sapling"){
@@ -100,12 +107,22 @@ function tree_doKeyPress ( code ) {
 		var t = new Enitity({doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
-	    var i;
-	    for(i = 0; i < entities.length; i++){
+	    var j;
+	    for(var i = 0; i < entities.length; i++){
 		if(entities[i] == this)
-		    break;
+		    j = i;
+		else if(entities[i].name == 'roots_02'){
+			entities[i].removed = true;
+		
+		}
 		
 	    }
+	    
+	    var r = Entities.types['roots_03'].clone();
+		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
+		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+		entities.push(r);
+		
 	    
 	    this.removed = true;
 	    entities.splice(i,0,t);
