@@ -107,20 +107,20 @@ var sn = Entities.types['sun'].clone();
 sn.position = {x: 700, y: 100};
 var noob = Entities.types ['cloud'].clone();
 noob.position = {x: Math.random() * MAX_X, y: 125};
-var bird = Entities.types['bird'].clone();
-bird.position = {x: 200, y: 200};
+//var bird = Entities.types['bird'].clone();
+//bird.position = {x: 200, y: 200};
 var squirrel = Entities.types['squirrel'].clone();
 squirrel.position = {x: 400, y: GROUND_Y};
 //var tree = Entities.types['tree'].clone();
 //tree.position = {x:200, y:TREE_Y};
 var acorn = Entities.types['acorn'].clone();
-acorn.position = {x:300, y:GROUND_Y+50};
+acorn.position = {x:300, y:GROUND_Y+30};
 var storm = Entities.types['storm'].clone();
 storm.position = {x: Math.random() * MAX_X, y: 170}
 
 /////////////////////////////////////////
 
-var entities = [sn, noob, storm, acorn, bird, squirrel];
+var entities = [sn, noob, storm, acorn, squirrel];
 var activeEntity = acorn;
 
 function doGameLoop()

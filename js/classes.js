@@ -92,7 +92,9 @@ Entity.prototype.hit = function(id,x,y)
 {
 
 	var spr = this.sprites[id];
-
+	
+	if(!exists(spr)) return false;
+	
 	var a = spr.anchor;
 	var w = spr.getWidth();
 	var h = spr.getHeight();
