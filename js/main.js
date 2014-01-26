@@ -4,6 +4,24 @@ var test = loadImage('test.png')
 
 function update(delta)
 {
+
+	var id = activeEntity.id;
+
+	for(var i = 0; i < entities.length; i++)
+	{
+		for(var j = i+1; j < entities.length; j++)
+		{
+			var e1 = entities[i];
+			var e2 = entities[j];
+			if(e1.collides(id,e2) || e2.collides(id,e1))
+			{
+				e1.doCollide(e2);
+				e2.doCollide(e1);
+			}
+		}
+	}
+
+
 	for(var i = 0; i < entities.length; i++)
 	{
 		var ent = entities[i];

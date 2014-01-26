@@ -23,14 +23,68 @@ function Entity ( options )
 
 	if(exists(options.initData))
 	{
-		this.initData = options.initData;
-		this.initData();
+		options.initData.call(this);
+	}
+
+	if(exists(options.doCollide))
+	{
+		this.doCollide = options.doCollide;
+	}
+	else
+	{
+		this.doCollide = function(){}
 	}
 }
 
 Entity.prototype.clone = function()
 {
 	return new Entity(this);
+}
+
+Entity.prototype.collides = function(id,other)
+{
+	var spr = this.sprites[id];
+
+	var a = spr.anchor;
+	var w = spr.getWidth();
+	var h = spr.getHeight();
+	var hw = w/2;
+	var hh = h/2;
+
+	var lx = this.position.x - hw;
+	var rx = this.position.x + hw;
+
+	var by = this.position.y - hh;
+	var ty = this.position.y + hh;
+
+	var anchorLeft = (a == 0 || a == 3 || a == 6);
+	var anchorRight = (a == 2 || a == 5 || a == 8);
+	var anchorTop = (a == 0 || a == 1 || a == 2);
+	var anchorBottom = (a == 6 || a == 7 || a == 8);
+
+	if (anchorLeft)
+	{
+		lx += hw;
+		rx += hw;
+	}
+	else if (anchorRight) 
+	{
+		lx -= hw;
+		rx -= hw;
+	}
+
+	if (anchorBottom)
+	{
+		by -= hh;
+		ty -= hh;
+	}
+	else if (anchorTop) 
+	{
+		by += hh;
+		ty += hh;
+	}
+
+	return other.hit(id,lx,ty) || other.hit(id,rx,ty) || other.hit(id,rx,by) || other.hit(id,lx,by);
 }
 
 Entity.prototype.hit = function(id,x,y)

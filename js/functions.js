@@ -442,11 +442,35 @@ function rootNode_updateIdle() {
 		}
 		
 		if(this.data.rainAmt >= neededRain) {
-			this.data.activated = true;
+			this.data.activate = true;
 			var sprout = findEntityWithName("sprout");
 			if(sprout != null) {
 				sprout.data.nodesWatered++;
 			}
+		}
+	}
+}
+
+function rootNode_doCollide(other)
+{
+	if (other.name == 'rain')
+	{
+		alert('root node received rain!');
+		other.removed = true;
+		raintAmt++;
+	}
+
+	if ( this.data.rainCount >= ROOT_NODE_REQUIRED_RAIN )
+	{
+		this.data.active = true;
+		var sprout = findEntityWithName("sprout");
+		if(sprout != null) {
+			sprout.data.nodesWatered++;
+			debug('incremented watered node count for sprout to' + sprout.data.nodesWatered);
+		}
+		else
+		{
+			debug('ERROR: no sprout found!');
 		}
 	}
 }
@@ -460,6 +484,6 @@ function findEntityWithName(name) {
 }
 
 function rootNode_initData() {
-	this.data.rainAmt = 0;
+	this.data.rainCount = 0;
 	this.data.active = false;
 }
