@@ -52,7 +52,7 @@ var last = new Date();
 var now = new Date();
 var delta = 0;
 
-var tent = Entities.types['squirrel'];
+var tent = Entities.types['bird'].clone();
 tent.position.x = 400;
 tent.position.y = 300;
 

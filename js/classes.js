@@ -19,6 +19,17 @@ function Entity ( options )
 		var spr = Graphics.files[id][this.name];
 		this.sprites[id] = spr;
 	}
+
+	if(exists(options.initData))
+	{
+		this.initData = options.initData;
+		this.initData();
+	}
+}
+
+Entity.prototype.clone = function()
+{
+	return new Entity(this);
 }
 
 function Sprite ( filename, options )

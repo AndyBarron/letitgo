@@ -95,49 +95,74 @@ function squirrel_updateIdle(){
 
 }
 
+function bird_initData ( code ) {
+	this.data.velocity_x = 0;
+	this.data.velocity_y = 0;
+}
+
 function bird_doKeyPress ( code ) {
-    
     if( code == KEY_LEFT || code == KEY_A ) {
-	this.data.velocity_x -= 1;
+	this.data.velocity_x -= BIRD_HORIZ_STRENGTH;
     }else if (code == KEY_RIGHT || code == KEY_D ){
-	this.data.velocity_x += 1;
+	this.data.velocity_x += BIRD_HORIZ_STRENGTH;
     }else if (code == KEY_UP || code == KEY_W){
-	this.data.velocity_y -= 2;
+	this.data.velocity_y = -BIRD_FLAP_STRENGTH;
     }else if (code == KEY_DOWN || code == KEY_S){
-	this.data.velocity_y += 3;
+	//this.data.velocity_y += 3;
     }
-    if(this.data.velocity_x > 3)
-	this.data.velocity_x = 3;
+
+    if(this.data.velocity_x > BIRD_MAX_VEL_X)
+	this.data.velocity_x = BIRD_MAX_VEL_X;
     
-    if(this.data.velocity_x < -3)
-	this.data.velocity_x = -3;
+    if(this.data.velocity_x < -BIRD_MAX_VEL_X)
+	this.data.velocity_x = -BIRD_MAX_VEL_X;
     
-    if(this.data.velocity_y > 3)
-	this.data.velocity_y = 3;
+    if(this.data.velocity_y > BIRD_MAX_VEL_Y)
+	this.data.velocity_y = BIRD_MAX_VEL_Y;
     
-    if(this.data.velocity_y < -3)
-	this.data.velocity_y = -3;
+    if(this.data.velocity_y < -BIRD_MAX_VEL_Y)
+	this.data.velocity_y = -BIRD_MAX_VEL_Y;
     
 
     
 }
 
-function bird_updateActive(){
-    this.position.x += this.data.velocity_x;
-    this.position.y += this.data.velocity_y;
-    if(this.data.velocity_x > 0)
-	this.data.velocity_x -= 0.01;
-    if(this.data.velocity_x < 0)
-	this.data.velocity_x += 0.01;
-    this.data.velocity_y += 0.006;
+function bird_updateActive(delta){
+    this.position.x += this.data.velocity_x*delta;
+    this.position.y += this.data.velocity_y*delta;
+    var decay = BIRD_HORIZ_DECAY*delta;
+    if(Math.abs(this.data.velocity_x) < decay)
+    	this.data.velocity_x = 0;
+
+    else if(this.data.velocity_x > 0)
+		this.data.velocity_x -= decay;
+
+    else if(this.data.velocity_x < 0)
+	this.data.velocity_x += decay;
+
+    this.data.velocity_y += BIRD_GRAVITY*delta;
+
     if(this.position.x > MAX_X)
-	this.position.x = MAX_X;
-    if(this.position.x < MIN_X)
-	this.position.x = MIN_X;
+    {
+		this.position.x = MAX_X;
+		this.data.velocity_x = 0;
+	}
+    else if(this.position.x < MIN_X)
+    {
+		this.position.x = MIN_X;
+		this.data.velocity_x = 0;
+	}
+
     if(this.position.y > GROUND_Y)
-	this.position.y = GROUND_Y;
-    if(this.position.y < MIN_Y)
-	this.position.y = MIN_Y; 
+    {
+		this.position.y = GROUND_Y
+		this.data.velocity_y = 0;
+	}
+    else if(this.position.y < MIN_Y)
+    {
+		this.position.y = MIN_Y;
+		this.data.velocity_y = 0;
+	}
 }
 
 function bird_updateIdle(){
