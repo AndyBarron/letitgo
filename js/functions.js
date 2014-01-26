@@ -113,8 +113,9 @@ function tree_doKeyPress ( code ) {
 		}
 		
 		var r = Entities.types['roots_02'].clone();
-		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
-		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+		r.position.x = this.position.x;
+		//+this.sprites[activeEntity.id].getWidth()/4;
+		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight()/2-1;
 		entities.push(r);
 		
 		
@@ -321,6 +322,7 @@ function cloud_doKeyPress(code) {
                         var myHeight = 30;
                         var rainHeight = 10;
                         
+						Sounds.play('water_sound');
                         var rainEnt = Entities.types['rain'].clone();                                                        
                         rainEnt.position.x = this.position.x;
                         rainEnt.position.y = this.position.y + this.sprites[activeEntity.id].getHeight()/2 + rainHeight/2;
