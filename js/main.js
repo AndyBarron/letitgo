@@ -30,11 +30,21 @@ function draw()
 	context.fillStyle = "#000000";
 	context.fillRect(0,0,canvas.width,canvas.height);
 
+	// get id of viewer
+	var id = activeEntity.id;
+
+	// draw background
+	var gnd = Graphics.files[id]['ground'];
+	var sky = Graphics.files[id]['sky_blue'];
+
+	context.drawImage(sky.image,0,0);
+	context.drawImage(gnd.image,0,canvas.height-gnd.image.height);
+
 	// draw everybody
 	for(var i = 0; i < entities.length; i++)
 	{
 		var ent = entities[i];
-		ent.sprites[activeEntity.id].draw(context,{
+		ent.sprites[id].draw(context,{
 			x: ent.position.x,
 			y: ent.position.y
 		});

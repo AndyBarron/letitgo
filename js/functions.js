@@ -101,12 +101,8 @@ function bird_initData ( code ) {
 }
 
 function bird_doKeyPress ( code ) {
-    if( code == KEY_LEFT || code == KEY_A ) {
-	this.data.velocity_x -= BIRD_HORIZ_STRENGTH;
-    }else if (code == KEY_RIGHT || code == KEY_D ){
-	this.data.velocity_x += BIRD_HORIZ_STRENGTH;
-    }else if (code == KEY_UP || code == KEY_W){
-	this.data.velocity_y = -BIRD_FLAP_STRENGTH;
+    if( code == KEY_UP|| code == KEY_W ) {
+	this.data.velocity_y -= BIRD_FLAP_STRENGTH;
     }else if (code == KEY_DOWN || code == KEY_S){
 	//this.data.velocity_y += 3;
     }
@@ -130,6 +126,9 @@ function bird_doKeyPress ( code ) {
 function bird_updateActive(delta){
     this.position.x += this.data.velocity_x*delta;
     this.position.y += this.data.velocity_y*delta;
+
+    var hAccel = BIRD_HORIZ_ACCEL * delta;
+
     var decay = BIRD_HORIZ_DECAY*delta;
     if(Math.abs(this.data.velocity_x) < decay)
     	this.data.velocity_x = 0;
@@ -139,6 +138,16 @@ function bird_updateActive(delta){
 
     else if(this.data.velocity_x < 0)
 	this.data.velocity_x += decay;
+
+    if(Input.isKeyDown(KEY_LEFT) || Input.isKeyDown(KEY_A))
+    {
+    	this.data.velocity_x -= hAccel;
+    }
+
+    if(Input.isKeyDown(KEY_RIGHT) || Input.isKeyDown(KEY_D))
+    {
+    	this.data.velocity_x += hAccel;
+    }
 
     this.data.velocity_y += BIRD_GRAVITY*delta;
 
@@ -153,10 +162,10 @@ function bird_updateActive(delta){
 		this.data.velocity_x = 0;
 	}
 
-    if(this.position.y > GROUND_Y)
+    if(this.position.y > GROUND_Y-BIRD_HEIGHT/2)
     {
-		this.position.y = GROUND_Y
-		this.data.velocity_y = 0;
+		this.position.y = GROUND_Y-BIRD_HEIGHT/2
+		this.data.velocity_y = -BIRD_FLAP_STRENGTH;
 	}
     else if(this.position.y < MIN_Y)
     {
