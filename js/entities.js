@@ -27,19 +27,28 @@ Entities.types = {};
 Entities.init = function()
 {
 	Entities.types['squirrel'] = new Entity({
-			id: 0,
-			name: 'squirrel',
-			doKeyPress: squirrel_doKeyPress,
-			updateIdle: squirrel_updateIdle,
-			updateActive: function(){},
+		id: 0,
+		name: 'squirrel',
+		doKeyPress: squirrel_doKeyPress,
+		updateIdle: squirrel_updateIdle,
+		updateActive: function(){},
 	});
 
 	Entities.types['bird'] = new Entity({
-			id: 2,
-			name: 'bird',
-			doKeyPress: bird_doKeyPress,
-			updateIdle: bird_updateIdle,
-			updateActive: bird_updateActive,
-			initData: bird_initData
+		id: 2,
+		name: 'bird',
+		doKeyPress: bird_doKeyPress,
+		updateIdle: bird_updateIdle,
+		updateActive: bird_updateActive,
+		initData: bird_initData
 	});
+
+	Entities.types['sun'] = new Entity({
+		id: 3,
+		name: 'sun',
+		doKeyPress: function(){},
+		updateIdle: function(){},
+		updateActive: function(){}
+	});
+
 }

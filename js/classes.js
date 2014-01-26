@@ -7,6 +7,7 @@ function Entity ( options )
 	this.updateActive = options.updateActive; //also takes deltaT
 	this.drawPost = options.drawPost; // post-processing if necessary
 
+	this.left = false;
 	this.active = false;
 	this.position = {x:0,y:0};
 	this.data = {};
@@ -30,6 +31,58 @@ function Entity ( options )
 Entity.prototype.clone = function()
 {
 	return new Entity(this);
+}
+
+Entity.prototype.hit = function(id,x,y)
+{
+
+	var spr = this.sprites[id];
+
+	var a = spr.anchor;
+	var w = spr.getWidth();
+	var h = spr.getHeight();
+	var hw = w/2;
+	var hh = h/2;
+
+	var lx = this.position.x - hw;
+	var rx = this.position.x + hw;
+
+	var by = this.position.y - hh;
+	var ty = this.position.y + hh;
+
+	var anchorLeft = (a == 0 || a == 3 || a == 6);
+	var anchorRight = (a == 2 || a == 5 || a == 8);
+	var anchorTop = (a == 0 || a == 1 || a == 2);
+	var anchorBottom = (a == 6 || a == 7 || a == 8);
+
+	if (anchorLeft)
+	{
+		lx += hw;
+		rx += hw;
+	}
+	else if (anchorRight) 
+	{
+		lx -= hw;
+		rx -= hw;
+	}
+
+	if (anchorBottom)
+	{
+		by += hh;
+		ty += hh;
+	}
+	else if (anchorTop) 
+	{
+		by -= hh;
+		ty -= hh;
+	}
+
+	var hit = lx <= x && x <= rx && by <= y && y <= ty;
+
+	if (hit) debug('registered click on ' + this.name);
+
+	return hit;
+
 }
 
 function Sprite ( filename, options )
@@ -67,6 +120,7 @@ Sprite.prototype.draw = function( context, options )
 	
 	var x = options.x;
 	var y = options.y;
+	var flipH = options.flipH;
 
 	var a = this.anchor;
 	var w = this.getWidth();
@@ -93,11 +147,17 @@ Sprite.prototype.draw = function( context, options )
 		y = 0;
 	}
 
+	if (!exists(flipH)) flipH = false;
+	var flipHMult = flipH ? -1 : 1;
+
+	// TODO actually flip them!!
+
 	context.save();
 
-	context.translate(x+offX,y+offY);
-	context.scale(this.scale,this.scale);
-	context.drawImage(this.image,0,0);
+	context.translate(x+offX*flipHMult,y+offY);
+	context.scale(this.scale*flipHMult,this.scale);
+
+	context.drawImage(this.image,0,0,this.image.width,this.image.height);
 
 	context.restore();
 
@@ -205,10 +265,15 @@ Sounds.play = function(name)
 function Graphics () {}
 
 Graphics.files = [];
+Graphics.fileCount = 0;
+Graphics.filesLoaded = 0;
+Graphics.fileList = [];
 
 Graphics.init = function() {
 	var ids = Entities.ids;
 	var names = Entities.names;
+
+	// load all images
 
 	for(var i = 0; i < ids.length; i++)
 	{
@@ -228,7 +293,36 @@ Graphics.init = function() {
 			if (!exists(Graphics.files[id]))
 				Graphics.files[id] = {};
 
+			Graphics.fileCount++;
+			Graphics.fileList.push(spr);
 			Graphics.files[id][name] = spr;
+		}
+	}
+
+}
+
+Graphics.scaleSprites = function(){
+
+	var ids = Entities.ids;
+	var names = Entities.names;
+
+	for(var n = 0; n < names.length; n++)
+	{
+		var total = 0;
+		for(var k = 0; k < ids.length; k++)
+		{
+			var spr = Graphics.files[k][names[n]];
+			var area = spr.getWidth()*spr.getHeight();
+			total += area;
+		}
+		var avg = total/ids.length;
+
+		for(var m = 0; m < ids.length; m++)
+		{
+			var spr = Graphics.files[m][names[n]];
+			var area = spr.getWidth()*spr.getHeight();
+			var ratio = avg / area;
+			spr.scale = Math.sqrt(ratio);
 		}
 	}
 }

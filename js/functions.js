@@ -1,11 +1,13 @@
 function squirrel_doKeyPress ( code ){
     if( code == KEY_LEFT || code == KEY_A){
+    this.left = true;
 	this.position.x -= 10;
 	if (this.position.x < MIN_X)
 	    x += 10;
 	else if(this.data.hasAcorn)
 	    this.data.acorn.position.x -= 10;
     }else if( code == KEY_RIGHT || code == KEY_D){
+    this.left = false;
 	this.position.x += 10;
 	if(this.position.x > MAX_X)
 	    x -= 10;
@@ -69,19 +71,19 @@ function tree_doKeyPress ( code ) {
 
 function sun_doKeyPress( code ){
     if ( code == KEY_LEFT || code == KEY_A ){
-	this.data.target.position.x -= 10;
+		this.data.target.position.x -= 10;
     }else  if ( code == KEY_RIGHT || code == KEY_D ){
-	this.data.target.position.x += 10;
+		this.data.target.position.x += 10;
     }else  if ( code == KEY_UP || code == KEY_W ){
-	this.data.target.position.y -= 10;
+		this.data.target.position.y -= 10;
     }else  if ( code == KEY_DOWN || code == KEY_S ){
-	this.data.target.position.y += 10;
+		this.data.target.position.y += 10;
     }else if  (code == KEY_SPACE){
-	for(var i = 0; i < entities.length; i++){
-	    if(entities[i].name == "sapling" && distance(entities[i], this) < 27){
-		entities[i].data.havingBeenShined = true;
-	    }
-	}
+		for(var i = 0; i < entities.length; i++){
+	    	if(entities[i].name == "sapling" && distance(entities[i], this) < 27){
+			entities[i].data.havingBeenShined = true;
+		    }
+		}
     }
 }
 
@@ -123,78 +125,69 @@ function bird_doKeyPress ( code ) {
     
 }
 
+function bird_updatePhysics(delta)
+{
+	this.position.x += this.data.velocity_x*delta;
+	this.position.y += this.data.velocity_y*delta;
+
+	var decay = BIRD_HORIZ_DECAY*delta;
+	if(Math.abs(this.data.velocity_x) < decay)
+		this.data.velocity_x = 0;
+
+	else if(this.data.velocity_x > 0)
+		this.data.velocity_x -= decay;
+
+	else if(this.data.velocity_x < 0)
+	this.data.velocity_x += decay;
+
+	this.data.velocity_y += BIRD_GRAVITY*delta;
+
+	if(this.position.x > MAX_X)
+	{
+		this.position.x = MAX_X;
+		this.data.velocity_x = 0;
+	}
+	else if(this.position.x < MIN_X)
+	{
+		this.position.x = MIN_X;
+		this.data.velocity_x = 0;
+	}
+
+	if(this.position.y > GROUND_Y-BIRD_HEIGHT/2)
+	{
+		this.position.y = GROUND_Y-BIRD_HEIGHT/2
+		this.data.velocity_y = -BIRD_FLAP_STRENGTH;
+	}
+	else if(this.position.y < MIN_Y)
+	{
+		this.position.y = MIN_Y;
+		this.data.velocity_y = 0;
+	}
+
+}
+
 function bird_updateActive(delta){
-    this.position.x += this.data.velocity_x*delta;
-    this.position.y += this.data.velocity_y*delta;
+
+	bird_updatePhysics.call(this,delta);
 
     var hAccel = BIRD_HORIZ_ACCEL * delta;
 
-    var decay = BIRD_HORIZ_DECAY*delta;
-    if(Math.abs(this.data.velocity_x) < decay)
-    	this.data.velocity_x = 0;
-
-    else if(this.data.velocity_x > 0)
-		this.data.velocity_x -= decay;
-
-    else if(this.data.velocity_x < 0)
-	this.data.velocity_x += decay;
-
     if(Input.isKeyDown(KEY_LEFT) || Input.isKeyDown(KEY_A))
     {
+    	this.left = true;
     	this.data.velocity_x -= hAccel;
     }
 
     if(Input.isKeyDown(KEY_RIGHT) || Input.isKeyDown(KEY_D))
     {
+    	this.left = false;
     	this.data.velocity_x += hAccel;
     }
 
-    this.data.velocity_y += BIRD_GRAVITY*delta;
-
-    if(this.position.x > MAX_X)
-    {
-		this.position.x = MAX_X;
-		this.data.velocity_x = 0;
-	}
-    else if(this.position.x < MIN_X)
-    {
-		this.position.x = MIN_X;
-		this.data.velocity_x = 0;
-	}
-
-    if(this.position.y > GROUND_Y-BIRD_HEIGHT/2)
-    {
-		this.position.y = GROUND_Y-BIRD_HEIGHT/2
-		this.data.velocity_y = -BIRD_FLAP_STRENGTH;
-	}
-    else if(this.position.y < MIN_Y)
-    {
-		this.position.y = MIN_Y;
-		this.data.velocity_y = 0;
-	}
 }
 
 function bird_updateIdle(){
-    this.data.velocity_x += (Math.random() - 0.5)/100;
-    if(Math.random() < 0.01)
-	this.data.velocity_x *= -1;
-    else if(Math.random() < 0.03)
-	this.data.velocity_y -= 0.2;
-     this.position.x += this.data.velocity_x;
-    this.position.y += this.data.velocity_y;
-    if(this.data.velocity_x > 0)
-	this.data.velocity_x -= 0.01;
-    if(this.data.velocity_x < 0)
-	this.data.velocity_x += 0.01;
-    this.data.velocity_y += 0.006;
-    if(this.position.x > MAX_X)
-	this.position.x = MAX_X;
-    if(this.position.x < MIN_X)
-	this.position.x = MIN_X;
-    if(this.position.y > GROUND_Y)
-	this.position.y = GROUND_Y;
-    if(this.position.y < MIN_Y)
-	this.position.y = MIN_Y;
+    bird_updatePhysics.call(this,delta);
 }
 
 function distance ( a, b ){ // a and b are Entities!

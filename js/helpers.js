@@ -8,7 +8,6 @@ function fileExists(filePath)
     return (http.status == 200);
 }
 
-ERROR_IMAGE_PATH = 'img/error.png';
 
 function loadImage(name)
 {
@@ -39,7 +38,7 @@ var MAX_X=800;
 var MAX_Y=600;
 var MIN_X=0;
 var MIN_Y=0;
-var GROUND_Y = 600;
+var GROUND_Y = 400;
 
 function debug()
 {

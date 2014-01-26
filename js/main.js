@@ -46,7 +46,8 @@ function draw()
 		var ent = entities[i];
 		ent.sprites[id].draw(context,{
 			x: ent.position.x,
-			y: ent.position.y
+			y: ent.position.y,
+			flipH: ent.left
 		});
 	}
 
@@ -58,16 +59,35 @@ Sounds.init('test.wav','zap.wav');
 Graphics.init();
 Entities.init();
 
+for(var f = 0; f < Graphics.fileCount; f++)
+{
+	Graphics.fileList[f].image.onload = function(){
+		Graphics.filesLoaded++;
+		if(Graphics.filesLoaded >= Graphics.fileCount)
+		{
+			main();
+		}
+
+	};
+}
+
 var last = new Date();
 var now = new Date();
 var delta = 0;
 
-var tent = Entities.types['bird'].clone();
-tent.position.x = 400;
-tent.position.y = 300;
+////////////////////////////////////////
 
-var entities = [tent];
-var activeEntity = tent;
+var sn = Entities.types['sun'].clone();
+sn.position = {x: 700, y: 100}
+var bird = Entities.types['bird'].clone();
+bird.position = {x: 200, y: 200};
+var squirrel = Entities.types['squirrel'].clone();
+squirrel.position = {x: 400, y: GROUND_Y};
+
+/////////////////////////////////////////
+
+var entities = [bird,squirrel,sn];
+var activeEntity = squirrel;
 
 function doGameLoop()
 {
@@ -86,10 +106,33 @@ function processKey(code)
 	activeEntity.doKeyPress(code);
 }
 
+function processClick(coords)
+{
+	var id = activeEntity.id;
+	for(var i = 0; i < entities.length; i++)
+	{
+		var ent = entities[i];
+		if (ent == activeEntity) continue;
+
+		var hit = ent.hit(id,coords.x,coords.y);
+		if ( hit )
+		{
+			Sounds.play('zap');
+			activeEntity = ent;
+			return;
+		}
+	}
+}
+
 ///////////////////////
 
-Input.keyPressListeners.push(processKey);
-doGameLoop();
+function main()
+{
+	Input.keyPressListeners.push(processKey);
+	Input.mousePressListeners.push(processClick);
+	doGameLoop();
+	Graphics.scaleSprites();
+}
 
 ///////////////////////
 
