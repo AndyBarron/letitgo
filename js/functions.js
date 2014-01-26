@@ -167,7 +167,7 @@ function tree_doKeyPress ( code ) {
 	    	
 	    }
 	    
-	    if(Math.random() < 0.1){
+	    if(Math.random() < (1.1-treeCount*0.1)){
 	    	var BIRD = Entities.types['bird'].clone();
 	    	BIRD.position.x = this.position.x;
 	    	BIRD.position.y = this.position.y;
