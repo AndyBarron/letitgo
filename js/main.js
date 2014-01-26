@@ -73,7 +73,7 @@ function draw()
 }
 
 Input.init(document,canvas);
-Sounds.init('test.wav','zap.wav', 'bird_sound.wav', 'squirrel_sound.wav', 'sun_sound.wav', 'tree_sound.wav', 'wind_sound.wav');
+Sounds.init('test.wav','zap.wav', 'bird_sound.wav', 'squirrel_sound.wav', 'sun_sound.wav', 'tree_sound.wav', 'wind_sound.wav', 'tada_sound.wav', 'water_sound.wav');
 Graphics.init();
 Entities.init();
 

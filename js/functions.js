@@ -53,6 +53,7 @@ function tree_doKeyPress ( code ) {
 			}
 		}
 		
+		Sounds.play('tada_sound');
 		var r = Entities.types['roots_01'].clone();
 		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
 		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
