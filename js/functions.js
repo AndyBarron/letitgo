@@ -31,7 +31,9 @@ function squirrel_doKeyPress ( code ){
     }
     
 }
-
+function squirrel_initData() {
+    this.data.velocity_x = 0;
+}
 
 function tree_doKeyPress ( code ) {
     if(this.name == "acorn"){
@@ -164,9 +166,6 @@ function squirrel_updateIdle(){
 
 }
 
-
-
-
 function bird_initData ( code ) {
 	this.data.velocity_x = 0;
 	this.data.velocity_y = 0;
@@ -190,9 +189,7 @@ function bird_doKeyPress ( code ) {
     
     if(this.data.velocity_y < -BIRD_MAX_VEL_Y)
 	this.data.velocity_y = -BIRD_MAX_VEL_Y;
-    
-
-    
+   
 }
 
 function bird_updatePhysics(delta)
