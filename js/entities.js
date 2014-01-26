@@ -29,7 +29,7 @@ Entities.sizes = {
 	'tree': 200*400,
 	'acorn': 40*40,
 	'sprout': 40*60,
-	'sapling': 200*300,
+	'sapling': 100*200,
 	'sun': 75*75,
 	'cloud': 250*100,
 	'sky_blue': 800*600,
@@ -163,7 +163,8 @@ Entities.init = function()
 		updateIdle : rootNode_updateIdle,
 		updateActive : function(){},
 		clickable: true,
-		doCollide: rootNode_doCollide
+		doCollide: rootNode_doCollide,
+		initData: rootNode_initData
 	});
 
 }

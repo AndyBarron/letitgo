@@ -42,7 +42,15 @@ function tree_doKeyPress ( code ) {
 		this.position.y -= 1;
 		this.position.x += (Math.random()-1)*0.01;
 	    }else{
-		 var t = new Entity({initData:function(){this.data.nodesWatered = 0;},doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sprout"});
+		 var t = new Entity({clickable: true, initData:function()
+		 	{this.data.nodesWatered = 0;},
+		 	doKeyPress : tree_doKeyPress, 
+		 	updateIdle:this.updateIdle,
+		 	updateActive: this.updateActive,
+		 	drawPost:this.drawPost,
+		 	active:true,
+		 	id:this.id,
+		 	name:"sprout"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 		
@@ -79,7 +87,18 @@ function tree_doKeyPress ( code ) {
 	}
 	
 	if(code == KEY_SPACE && this.data.nodesWatered == 4){
-	    var t = new Enitity({initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;}, doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sapling"});
+	    var t = new Entity(
+	    	clickable: true,
+	    	{initData:function(){this.data.left_count = 0; this.data.right_count = 0; this.data.havingBeenShined = false;},
+	    	doKeyPress : tree_doKeyPress,
+	    	updateIdle:this.updateIdle,
+	    	updateActive: this.updateActive,
+	    	drawPost:this.drawPost,
+	    	active:true,
+	    	id:this.id,
+	    	name:"sapling"}
+	    );
+	    
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 	    this.removed = true;
@@ -435,55 +454,32 @@ function flowers_initDate() {
 }
 
 function rootNode_updateIdle() {
-	var neededRain = 1;
-	if(!this.data.active) {
-		rainEnts = [];
-		
-		for(var i = 0; i < entities.length; i++) {
-			if(entities[i].name == "rain") {
-				rainEnts.push(entities[i]);
-			}
-		}
-		
-		var activationDistance = 5;
-		for(var i=0; i<rainEnts.length; i++) {
-			if( (Math.abs(rainEnts[i].position.x - this.position.x) < activationDistance ) &&
-				( Math.abs(rainEnts[i].position.y - this.position.y) < activationDistance ) ) {
-					this.data.rainAmt++;
-			}
-		}
-		
-		if(this.data.rainAmt >= neededRain) {
-			this.data.activate = true;
-			var sprout = findEntityWithName("sprout");
-			if(sprout != null) {
-				sprout.data.nodesWatered++;
-			}
-		}
-	}
+	
 }
 
 function rootNode_doCollide(other)
 {
-	if (other.name == 'rain')
+	if (other.name == 'rain' && this.data.rainCount < ROOT_NODE_REQUIRED_RAIN)
 	{
-		debug('root node received rain!');
+		debug('root node received rain, currently ' + this.data.rainCount);
 		other.removed = true;
-		raintAmt++;
-	}
+		this.data.rainCount++;
+	
 
-	if ( this.data.rainCount >= ROOT_NODE_REQUIRED_RAIN )
-	{
-		this.data.active = true;
-		var sprout = findEntityWithName("sprout");
-		if(sprout != null) {
-			sprout.data.nodesWatered++;
-			debug('incremented watered node count for sprout to' + sprout.data.nodesWatered);
-		}
-		else
+		if ( this.data.rainCount >= ROOT_NODE_REQUIRED_RAIN )
 		{
-			debug('ERROR: no sprout found!');
+			this.data.active = true;
+			var sprout = findEntityWithName("sprout");
+			if(sprout != null) {
+				sprout.data.nodesWatered++;
+				debug('incremented watered node count for sprout to ' + sprout.data.nodesWatered);
+			}
+			else
+			{
+				debug('ERROR: no sprout found!');
+			}
 		}
+
 	}
 }
 

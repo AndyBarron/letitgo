@@ -144,6 +144,7 @@ function processClick(coords)
 		var hit = ent.hit(id,coords.x,coords.y);
 		if ( hit )
 		{
+			debug('registered click');
 			playSwitchSound(ent.name);
 			activeEntity = ent;
 			return;

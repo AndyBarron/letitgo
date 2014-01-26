@@ -44,6 +44,8 @@ Entity.prototype.collides = function(id,other)
 {
 	var spr = this.sprites[id];
 
+	if(!exists(spr)) spr = this.sprites[0];
+
 	var a = spr.anchor;
 	var w = spr.getWidth();
 	var h = spr.getHeight();
@@ -344,7 +346,7 @@ Graphics.init = function() {
 			if (!exists(Graphics.files[id]))
 				Graphics.files[id] = {};
 
-			if (name == 'tree') spr.anchor = 7;
+			if (name == 'tree' || name == 'sapling') spr.anchor = 7;
 
 			Graphics.fileCount++;
 			Graphics.fileList.push(spr);
