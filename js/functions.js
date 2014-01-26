@@ -237,17 +237,15 @@ function distance ( a, b ){ // a and b are Entities!
 
 
 function cloud_doKeyPress(code) {
-		var mySpeed = 0.1;
+		var mySpeed = CLOUD_MOVE_SPEED;
 		
 		if(code === KEY_LEFT || code === KEY_A) {
-			if((this.position.x - mySpeed) > MIX_X)
+			if((this.position.x - mySpeed) > MIN_X)
 				this.position.x -= mySpeed;
-			this.data.movingLeft = true;
 		}
 		if(code === KEY_RIGHT || code === KEY_D) {
 			if(this.position.x + mySpeed < MAX_X)
 				this.position.x += mySpeed;
-			this.data.moveingLeft = false;
 		}
 		
 		if(code === KEY_SPACE) {
@@ -272,11 +270,15 @@ function cloud_doKeyPress(code) {
 }
 
 function cloud_updateIdle() {
-	var addAmt = Math.random()*0.1;
-	var maxVel = 0.3;
-	if(Math.random() < 0.5) {
+
+	var addAmt = Math.random()*CLOUD_MOVE_SPEED/3;
+	var maxVel = CLOUD_MOVE_SPEED;
+	
+	if(this.data.velocity_x < 0) addAmt *= -1;
+	
+	/*if(Math.random() < 0.1) {
 		addAmt *= -1;
-	}
+	}*/
 	
 	if(Math.abs(this.data.velocity_x) > maxVel) {
 		if(this.data.velocity_x > 0) {
