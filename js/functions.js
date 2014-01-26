@@ -147,6 +147,7 @@ function tree_doKeyPress ( code ) {
 		var t = new Entity({clickable: true, initData: tree_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
+		activeEntity = t;
 	    var j;
 	    for(var i = 0; i < entities.length; i++){
 		if(entities[i] == this)
@@ -166,7 +167,7 @@ function tree_doKeyPress ( code ) {
 	    	
 	    }
 	    
-	    if(Math.random() < (1-treeCount * 0.1)){
+	    if(Math.random() < 0.1){
 	    	var BIRD = Entities.types['bird'].clone();
 	    	BIRD.position.x = this.position.x;
 	    	BIRD.position.y = this.position.y;
@@ -176,7 +177,7 @@ function tree_doKeyPress ( code ) {
 	    
 	    var r = Entities.types['roots_03'].clone();
 		r.position.x = this.position.x-16;
-		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+		r.position.y = this.position.y+28;
 		entities.push(r);
 		
 	    
