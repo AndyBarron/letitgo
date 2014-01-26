@@ -263,7 +263,17 @@ function distance ( a, b ){ // a and b are Entities!
 
 
 function cloud_doKeyPress(code) {
-	
+	if(code === KEY_SPACE) {
+                        var myHeight = 30;
+                        var rainHeight = 10;
+                        
+                        var rainEnt = Entities.types['rain'].clone();                                                        
+                        rainEnt.position.x = this.position.x;
+                        rainEnt.position.y = this.position.y + this.sprites[activeEntity.id].getHeight()/2 + rainHeight/2;
+                        rainEnt.data.startingY = rainEnt.position.y;
+                        rainEnt.data.makeRainAbove = true;
+                        entities.push(rainEnt);
+                }
 }
 
 function cloud_updateIdle() {
