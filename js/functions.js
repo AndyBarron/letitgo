@@ -178,9 +178,15 @@ function sun_doKeyPress( code ){
 }
 
 function sun_initData (){
-	var ray = new Entity({name:"ray", id:84343, updateIdle:emptyFunction, updateActive:emptyFunction, initData:emptyFunction, doKeyPress:emptyFunction, drawPost:emptyFunction, active:false});
-	entities.push(ray);
-	this.data.target = ray;
+	this.data.target = new Entity({name: "Derp"});
+}
+
+function sun_updateActive() {
+	if(this.data.target.name == "Derp") {
+		var ray = new Entity({name:"ray", id:84343, updateIdle:emptyFunction, updateActive:emptyFunction, initData:emptyFunction, doKeyPress:emptyFunction, drawPost:emptyFunction, active:false});
+		entities.push(ray);
+		this.data.target = ray;
+	}
 }
 
 function squirrel_updateIdle(){
