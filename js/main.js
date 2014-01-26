@@ -55,7 +55,7 @@ function draw()
 }
 
 Input.init(document,canvas);
-Sounds.init('test.wav','zap.wav');
+Sounds.init('test.wav','zap.wav', 'bird_sound.wav', 'squirrel_sound.wav', 'sun_sound.wav', 'tree_sound.wav', 'wind_sound.wav');
 Graphics.init();
 Entities.init();
 
@@ -126,10 +126,24 @@ function processClick(coords)
 		var hit = ent.hit(id,coords.x,coords.y);
 		if ( hit && ent.id > -1 && ent.id < MAX_ID)
 		{
-			Sounds.play('zap');
+			playSwitchSound(ent.name);
 			activeEntity = ent;
 			return;
 		}
+	}
+}
+
+function playSwitchSound(name) {
+	if( (name == "cloud") || (name == "storm") ) {
+		Sounds.play('wind_sound');
+	} else if (name == "squirrel") {
+		Sounds.play('squirrel_sound');
+	} else if ( (name == "tree") || (name == "acorn") || (name == "sprout") || (name == "sapling") ) {
+		Sounds.play('tree_sound');
+	} else if ( (name == "bird") ) {
+		Sounds.play('bird_sound');
+	} else if ( (name == "sun") ) {
+		Sounds.play('sun_sound');
 	}
 }
 
