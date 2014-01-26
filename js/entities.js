@@ -53,7 +53,15 @@ Entities.init = function()
 		updateIdle: squirrel_updateIdle,
 		updateActive: function(){},
 	});
-
+	
+	Entities.types['rain'] = new Entity({
+		id: 5454,
+		name: 'rain',
+		doKeyPress: function() {},
+		updateIdle: rain_updateIdle,
+		updateActive: function(){},
+	});
+	
 	Entities.types['bird'] = new Entity({
 		id: 2,
 		name: 'bird',
