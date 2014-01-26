@@ -132,8 +132,6 @@ Entity.prototype.hit = function(id,x,y)
 
 	var hit = lx <= x && x <= rx && by <= y && y <= ty;
 
-	if (hit) debug('registered click on ' + this.name);
-
 	return hit;
 
 }
