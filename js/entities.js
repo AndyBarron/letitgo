@@ -31,7 +31,7 @@ Entities.sizes = {
 	'sprout': 40*60,
 	'sapling': 200*300,
 	'sun': 75*75,
-	'cloud': 200*75,
+	'cloud': 300*150,
 	'sky_blue': 800*600,
 	'sky_dark': 800*600,
 	'ground': 800*600,

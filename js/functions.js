@@ -61,7 +61,7 @@ function tree_doKeyPress ( code ) {
 			rn.push(Entities.types['rootNode'].clone());
 			rn[i].position.y = this.position.y + 20;
 			rn[i].position.x = this.position.x + (i-2) * 50;
-			entities.push(rn);
+			entities.push(rn[i]);
 		}
 		
 		this.removed = true;
