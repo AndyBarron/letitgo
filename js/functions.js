@@ -53,7 +53,6 @@ function tree_doKeyPress ( code ) {
 			}
 		}
 		
-		Sounds.play('tada_sound');
 		var r = Entities.types['roots_01'].clone();
 		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
 		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
@@ -500,3 +499,16 @@ function rootNode_initData() {
 	this.data.rainCount = 0;
 	this.data.active = false;
 }
+
+
+function acorn_initData(){
+	this.data.dropped = false;
+	this.data.size = 0;
+}
+
+function tree_initData(){
+	this.data.hasAcorn = false;
+	this.data.acorn = null;
+}
+
+
