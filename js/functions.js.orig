@@ -175,8 +175,14 @@ function tree_doKeyPress ( code ) {
 	    
 	    
 	    var r = Entities.types['roots_03'].clone();
+<<<<<<< HEAD
 		r.position.x = this.position.x-16;
+		//+this.sprites[activeEntity.id].getWidth()/2;
+		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight()/6+24;
+=======
+		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
 		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+>>>>>>> 075c297e56ea98dfb5fe77fe7a48f8f3f482bfc6
 		entities.push(r);
 		
 	    
