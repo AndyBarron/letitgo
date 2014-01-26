@@ -19,7 +19,8 @@ Entities.names = [
 	'roots_02',
 	'roots_03',
 	'rain',
-	'storm'
+	'storm',
+	'rootNode'
 ];
 
 Entities.sizes = {
@@ -27,7 +28,7 @@ Entities.sizes = {
 	'bird': 64*64,
 	'tree': 200*400,
 	'acorn': 40*40,
-	'sprout': 200*200,
+	'sprout': 40*60,
 	'sapling': 200*300,
 	'sun': 75*75,
 	'cloud': 200*75,
@@ -40,6 +41,7 @@ Entities.sizes = {
 	'roots_03': 100*100,
 	'rain': 50*50,
 	'storm': 200*75
+	'rootNode': 30*30
 };
 
 Entities.types = {};
@@ -60,6 +62,7 @@ Entities.init = function()
 		doKeyPress: function() {},
 		updateIdle: rain_updateIdle,
 		updateActive: function(){},
+		initData: rain_initData
 	});
 	
 	Entities.types['bird'] = new Entity({
@@ -121,5 +124,36 @@ Entities.init = function()
 	updateActive: function(){}
     });
 
+	Entities.types['roots_01'] = new Entity({
+	id:177,
+	name : 'roots_01',
+	doKeyPress : function(){},
+	updateIdle : function(){},
+	updateActive : function(){}
+	});
+
+	Entities.types['roots_02'] = new Entity({
+	id:177,
+	name : 'roots_02',
+	doKeyPress : function(){},
+	updateIdle : function(){},
+	updateActive : function(){}
+	});
+
+	Entities.types['roots_03'] = new Entity({
+	id:177,
+	name : 'roots_03',
+	doKeyPress : function(){},
+	updateIdle : function(){},
+	updateActive : function(){}
+	});
+
+	Entities.types['rootNode'] = new Entity({
+	id:177,
+	name : 'rootNode',
+	doKeyPress : function(){},
+	updateIdle : rootNode_updateIdle,
+	updateActive : function(){}
+	});
 
 }

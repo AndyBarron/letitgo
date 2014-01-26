@@ -40,14 +40,20 @@ function tree_doKeyPress ( code ) {
 		this.position.y -= 1;
 		this.position.x += (Math.random()-1)*0.01;
 	    }else{
-		 var t = new Enitity({doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sprout"});
+		 var t = new Entity({doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sprout"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
-	    for(var i = 0; i < entities.length; i++){
-		if(entities[i] == this)
-		    entities.splice(i,1,t);
 		
-	    }
+		var i = 0;
+		for(i; i<entities.length; i++) {
+			if(entities[i] == this) {
+				break;
+			}
+		}
+		
+		this.removed = true;
+		entities.splice(i, 0, t);
+		
 	    }
 	}
     
@@ -237,31 +243,7 @@ function distance ( a, b ){ // a and b are Entities!
 
 
 function cloud_doKeyPress(code) {
-		var mySpeed = CLOUD_MOVE_SPEED;
-		
-		if(code === KEY_LEFT || code === KEY_A) {
-			this.data.velocity_x = -1*mySpeed;
-			/*if((this.position.x - mySpeed) > MIN_X)
-				this.position.x -= mySpeed;*/
-		}
-		if(code === KEY_RIGHT || code === KEY_D) {
-			this.data.velocity_x = mySpeed;
-			/*if(this.position.x + mySpeed < MAX_X)
-				this.position.x += mySpeed;*/
-		}
-		
-		if(code === KEY_SPACE) {
-			var myHeight = 30;
-			var rainHeight = 10;
-			
-			var rainEnt = Entities.types['rain'].clone();							
-			rainEnt.position.x = this.position.x;
-			rainEnt.position.y = this.position.y + this.sprites[activeEntity.id].getHeight()/2 + rainHeight/2;
-			rainEnt.data.startingY = rainEnt.position.y;
-			rainEnt.data.makeRainAbove = true;
-			entities.push(rainEnt);
-		}
-		
+	
 }
 
 function cloud_updateIdle() {
@@ -293,9 +275,42 @@ function cloud_updateIdle() {
 }
 
 function cloud_updateActive() {
-	if ( !(Input.isKeyDown(KEY_LEFT) || Input.isKeyDown(KEY_RIGHT) || Input.isKeyDown(KEY_A) || Input.isKeyDown(KEY_D)) ) {
-		this.updateIdle();
+	
+	var moved = false; 
+    if(Input.isKeyDown(KEY_LEFT) || Input.isKeyDown(KEY_A))
+    {
+    	this.data.velocity_x -= CLOUD_ACCEL*delta;
+		moved = true;
+		if(this.data.velocity_x < -1*CLOUD_ACTIVE_MOVE_SPEED)
+			this.data.velocity_x = -1*CLOUD_ACTIVE_MOVE_SPEED;
+    }
+	if(Input.isKeyDown(KEY_RIGHT) || Input.isKeyDown(KEY_D))
+    {
+		moved = true;
+    	this.data.velocity_x += CLOUD_ACCEL*delta;
+		if(this.data.velocity_x > CLOUD_ACTIVE_MOVE_SPEED)
+			this.data.velocity_x = CLOUD_ACTIVE_MOVE_SPEED;
+    }
+	
+	if(!moved) {
+		if(this.data.velocity_x < 0) {
+			this.data.velocity_x += CLOUD_ACCEL*delta;
+			if(this.data.velocity_x > 0) this.data.velocity_x = 0;
+		}
+		else if (this.data.velocity_x > 0) {
+			this.data.velocity_x -= CLOUD_ACCEL*delta
+			if(this.data.velocity_x < 0) this.data.velocity_x = 0;
+		}
 	}
+	
+	var newLoc = (this.position.x + this.data.velocity_x);
+	
+	if(newLoc > MIN_X && newLoc < MAX_X) {
+		this.position.x += this.data.velocity_x*delta;
+	} else {
+		this.data.velocity_x = 0;
+	}
+	
 }
 
 function cloud_initData() {
@@ -307,20 +322,25 @@ function emptyFunction() {}
 
 function rain_updateIdle() {
 	
-	debug(this.sprites.length);
 	var myHeight = this.sprites[activeEntity.id].getHeight();
 	var heightDiff = (this.position.y  - this.data.startingY);
+	var rainSpeed = 10;
 	
 	if(!Input.isKeyDown(KEY_SPACE)) {
 		this.data.makeRainAbove = false;
-	} else if( makeRainAbove && activeEntity.name == "cloud" && (heightDiff % myHeight) == 0 ) {
-		var rainEnt = Entities.types['rain'].clone();					
+	} else if( this.data.makeRainAbove && activeEntity.name == "cloud" && (heightDiff % myHeight) == 0 ) {
+		
+		var rainEnt = Entities.types['rain'].clone();
+		rainEnt.initData();		
 		rainEnt.position.x = this.position.x;
 		rainEnt.position.y = this.position.y - myHeight;
 		rainEnt.data.startingY = rainEnt.position.y;
 		rainEnt.data.makeRainAbove = true;
 		entities.push(rainEnt);
+		
 	}
+	
+	this.position.y += rainSpeed;
 	
 	if(this.position.x < MIN_X || this.position.y < MIN_Y || this.position.x > MAX_X || this.position.y > MAX_Y) {
 		this.removed = true;
