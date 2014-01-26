@@ -267,37 +267,37 @@ function cloud_doKeyPress(code) {
 }
 
 function cloud_updateIdle() {
-	var addAmt = Math.Random()*0.1;
+	var addAmt = Math.random()*0.1;
 	var maxVel = 0.3;
 	if(Math.random() < 0.5) {
 		addAmt *= -1;
 	}
 	
-	if(Math.abs(this.data.velocity.x) > maxVel) {
-		if(this.data.velocity.x > 0) {
-			this.data.velocity.x = maxVel;
+	if(Math.abs(this.data.velocity_x) > maxVel) {
+		if(this.data.velocity_x > 0) {
+			this.data.velocity_x = maxVel;
 		} else {
-			this.data.velocity.x = -maxVel;
+			this.data.velocity_x = -maxVel;
 		}
 	}
 	
-	this.data.velocity.x += addAmt;
-	var newLoc = (this.position.x + mySpeed);
+	this.data.velocity_x += addAmt;
+	var newLoc = (this.position.x + this.data.velocity_x);
 	
 	if( newLoc < MAX_X && newLoc > MIN_X )
-		this.position.x += mySpeed;
+		this.position.x += this.data.velocity_x;
 	else
-		this.data.velocity.x *= -1;
+		this.data.velocity_x *= -1;
 }
 
 function cloud_updateActive() {
-	if ( !(input.isKeyDown(KEY_LEFT) || input.isKeyDown(KEY_RIGHT) || input.isKeyDown(KEY_A) || input.isKeyDown(KEY_D)) ) {
+	if ( !(Input.isKeyDown(KEY_LEFT) || Input.isKeyDown(KEY_RIGHT) || Input.isKeyDown(KEY_A) || Input.isKeyDown(KEY_D)) ) {
 		this.updateIdle();
 	}
 }
 
 function cloud_initData() {
-	this.data.velocity.x = 0;
+	this.data.velocity_x = 0;
 }
 
 function emptyFunction() {}

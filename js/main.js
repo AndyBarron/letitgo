@@ -87,10 +87,12 @@ var squirrel = Entities.types['squirrel'].clone();
 squirrel.position = {x: 400, y: GROUND_Y};
 var tree = Entities.types['acorn'].clone();
 tree.position = {x:200, y:GROUND_Y};
+var cloud = Entities.types['cloud'].clone();
+cloud.position = {x: 500, y: 150 };
 
 /////////////////////////////////////////
 
-var entities = [bird,squirrel,sn, tree];
+var entities = [bird,squirrel,sn, tree, cloud];
 var activeEntity = tree;
 
 function doGameLoop()
