@@ -254,14 +254,7 @@ function cloud_doKeyPress(code) {
 			var myHeight = 30;
 			var rainHeight = 10;
 			
-			var rainEnt = new Entity({doKeyPress: emptyFunction,
-									updateIdle: rain_updateIdle,
-									updateActive: emptyFunction,
-									drawPost: emptyFunction,
-									active: false,
-									id: 68546,
-									name: "Rain"});
-										
+			var rainEnt = Entities.types['rain'].clone();							
 			rainEnt.position.x = this.position.x;
 			rainEnt.position.y = this.position.y + this.sprites[activeEntity.id].getHeight()/2 + rainHeight/2;
 			rainEnt.data.startingY = rainEnt.position.y;
@@ -314,26 +307,19 @@ function emptyFunction() {}
 
 function rain_updateIdle() {
 	
+	debug(this.sprites.length);
 	var myHeight = this.sprites[activeEntity.id].getHeight();
 	var heightDiff = (this.position.y  - this.data.startingY);
 	
 	if(!input.isKeyDown(KEY_SPACE)) {
 		this.data.makeRainAbove = false;
 	} else if( makeRainAbove && activeEntity.name == "cloud" && (heightDiff % myHeight) == 0 ) {
-		var rainEnt = new Entity({doKeyPress: rain_doKeyPress,
-								sprites: sprites.rainSprites,
-								updateIdle: rain_updateIdle,
-								updateActive: rain_updateActive,
-								drawPost: null,
-								active: false,
-								id: 6846851,
-								name: "Rain"});
-								
-			rainEnt.position.x = this.position.x;
-			rainEnt.position.y = this.position.y - myHeight;
-			rainEnt.data.startingY = rainEnt.position.y;
-			rainEnt.data.makeRainAbove = true;
-			entities.push(rainEnt);
+		var rainEnt = Entities.types['rain'].clone();					
+		rainEnt.position.x = this.position.x;
+		rainEnt.position.y = this.position.y - myHeight;
+		rainEnt.data.startingY = rainEnt.position.y;
+		rainEnt.data.makeRainAbove = true;
+		entities.push(rainEnt);
 	}
 	
 	if(this.position.x < MIN_X || this.position.y < MIN_Y || this.position.x > MAX_X || this.position.y > MAX_Y) {
