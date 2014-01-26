@@ -79,8 +79,8 @@ Entities.init = function()
 		name: 'sun',
 		doKeyPress: sun_doKeyPress,
 		updateIdle: function(){},
-		updateActive: function(){}
-		initData: sun_initData;
+		updateActive: sun_updateActive(),
+		initData: sun_initData
 	});
 
     Entities.types['tree'] = new Entity({
