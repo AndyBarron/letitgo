@@ -29,9 +29,9 @@ function squirrel_doKeyPress ( code ){
 		} 
 	    }
 	}
-    }
-    
+    }   
 }
+
 function squirrel_initData() {
     this.data.velocity_x = 0;
 }
@@ -56,7 +56,7 @@ function tree_doKeyPress ( code ) {
 		 	id:this.id,
 		 	name:"sprout"});
 	    t.position.x = this.position.x;
-	    t.position.y = this.position.y;
+	    t.position.y = TREE_Y;
 		
 		var i = 0;
 		for(i; i<entities.length; i++) {
@@ -68,7 +68,7 @@ function tree_doKeyPress ( code ) {
 		Sounds.play('tada_sound');
 		var r = Entities.types['roots_01'].clone();
 		r.position.x = this.position.x+this.sprites[activeEntity.id].getWidth()/2;
-		r.position.y = this.position.y+this.sprites[activeEntity.id].getHeight();
+		r.position.y = TREE_Y;
 		entities.push(r);
 		
 		var rn = [];
