@@ -14,7 +14,7 @@ function squirrel_doKeyPress ( code ){
 	else if(this.data.hasAcorn)
 	    this.data.acorn.position.x += 10;
     }else if ( code == KEY_SPACE){
-	//squirrel drops acorn or else tries to pick one up
+	//squirrel drops acorn or else tries to pick one up and Thomas is dumb
 	if ( this.data.hasAcorn){
 	    this.data.hasAcorn = false;
 	    this.data.acorn.position.y += 40;
@@ -51,6 +51,19 @@ function tree_doKeyPress ( code ) {
 			}
 		}
 		
+		var r = Entities.types['roots_01'].clone();
+		r.position.x = this.position.x;
+		r.position.y = this.position.y;
+		entities.push(r);
+		
+		var rn = [];
+		for( var i = 0; i < 4; i++){
+			rn.push(Entities.types['rootNode'].clone());
+			rn[i].position.y = this.position.y + 20;
+			rn[i].position.x = this.position.x + (i-2) * 50;
+			entities.push(rn);
+		}
+		
 		this.removed = true;
 		entities.splice(i, 0, t);
 		
@@ -62,11 +75,16 @@ function tree_doKeyPress ( code ) {
 	    var t = new Enitity({doKeyPress : tree_doKeyPress,  updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"sapling"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
-	    for(var i = 0; i < entities.length; i++){
-		if(entities[i] == this)
-		    entities.splice(i,1,t);
-		
-	    }
+	    this.removed = true;
+	    var j = 0;
+		for(var i = 0; i<entities.length; i++) {
+			if(entities[i] == this) {
+				j = i;
+			}else if(entities[i].name == 'rootNode'){
+				entities[i].removed = true;
+			}
+		}
+		entities.splice(j,0,t);
 	}
     }else if (this.name == "sapling"){
 	if(this.data.havingBeenShined){
@@ -80,11 +98,16 @@ function tree_doKeyPress ( code ) {
 		var t = new Enitity({doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
-	    for(var i = 0; i < entities.length; i++){
+	    var i;
+	    for(i = 0; i < entities.length; i++){
 		if(entities[i] == this)
-		    entities.splice(i,1,t);
+		    break;
 		
 	    }
+	    
+	    this.removed = true;
+	    entities.splice(i,0,t);
+	    
 	    }
 	}
 	
