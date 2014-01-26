@@ -68,13 +68,13 @@ Entity.prototype.hit = function(id,x,y)
 
 	if (anchorBottom)
 	{
-		by += hh;
-		ty += hh;
+		by -= hh;
+		ty -= hh;
 	}
 	else if (anchorTop) 
 	{
-		by -= hh;
-		ty -= hh;
+		by += hh;
+		ty += hh;
 	}
 
 	var hit = lx <= x && x <= rx && by <= y && y <= ty;
