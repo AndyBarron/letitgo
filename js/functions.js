@@ -18,6 +18,7 @@ function squirrel_doKeyPress ( code ){
 	if ( this.data.hasAcorn){
 	    this.data.hasAcorn = false;
 	    this.data.acorn.position.y += 40;
+	    this.data.acorn.clickable = true;
 	    this.data.acorn = null;
 	}else{
 	    for( var i = 0 ; i < entities.length ; i++){
@@ -36,6 +37,9 @@ function squirrel_initData() {
 }
 
 function tree_doKeyPress ( code ) {
+
+	// acorn behavior
+	// martin sucks
     if(this.name == "acorn"){
 	if(code == KEY_SPACE){
 	    if(this.position.y > GROUND_Y){
@@ -81,7 +85,12 @@ function tree_doKeyPress ( code ) {
 	    }
 	}
     
-    }else if (this.name == "sprout"){
+    }
+
+
+
+    // sprout behavior
+    else if (this.name == "sprout"){
 	
 	if( !(this.data.nodesWatered == 4) ) {
 		debug(this.data.nodesWatered);
@@ -121,7 +130,11 @@ function tree_doKeyPress ( code ) {
 		
 		entities.splice(j,0,t);
 	}
-    }else if (this.name == "sapling"){
+    }
+
+    // saplingggggg
+
+    else if (this.name == "sapling"){
 	if(this.data.havingBeenShined){
 	    if(code == KEY_LEFT || code == KEY_A)
 		if(this.data.left_count - this.data.right_count < 2)
@@ -155,26 +168,33 @@ function tree_doKeyPress ( code ) {
 	    
 	    }
 	}
+
+
+	// let it grow - not elsa
 	
     }else if (this.name == "tree"){
 	if(code == KEY_SPACE){
-	    if(this.data.hasAcorn){
-		if(this.data.acorn.data.size < 100){
+	    if(this.data.hasAcorn && this.data.acorn != null){
+		if(this.data.acorn.data.size < ACORN_BIG_SIZE){
 		    this.data.acorn.data.size++;
-		    this.data.acorn.position.x += 1;
+		    this.data.acorn.position.x ++;
 		}
 	    }else{
-		var t = new Entity({initData: acorn_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:false, id:this.id, name:"acorn"});
+	    var t = Entities.types['acorn'].clone();
 		t.position.x = this.position.x;
 		t.position.y = this.position.y - 200; // MAGIC NUMBER!!!
+		t.clickable = false;
 		entities.push(t);
 		this.data.hasAcorn = true;
 		this.data.acorn = t;
 	    }
-	}else if (code == KEY_DOWN || code == KEY_S){
-	    if(this.data.acorn.size >= 100){
-		this.data.acorn.dropped = true;
-		this.data.acorn.position.y += 27;
+	}else if (code == KEY_DOWN || code == KEY_S && this.data.acorn != null){
+	    if(this.data.acorn.data.size >= ACORN_BIG_SIZE){
+	    	debug('down key hit and acorn size >= 100');
+			this.data.acorn.data.dropped = true;
+			this.data.acorn.position.y = GROUND_Y;
+			this.hasAcorn = false;
+			this.data.acorn = null;
 	    }
 	}
     }
