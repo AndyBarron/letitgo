@@ -495,3 +495,16 @@ function rootNode_initData() {
 	this.data.rainCount = 0;
 	this.data.active = false;
 }
+
+
+function acorn_initData(){
+	this.data.dropped = false;
+	this.data.size = 0;
+}
+
+function tree_initData(){
+	this.data.hasAcorn = false;
+	this.data.acorn = null;
+}
+
+
