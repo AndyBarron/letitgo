@@ -38,7 +38,7 @@ var MAX_X=800;
 var MAX_Y=600;
 var MIN_X=0;
 var MIN_Y=0;
-var GROUND_Y = 500;
+var GROUND_Y = MAX_Y-200;
 
 function debug()
 {
