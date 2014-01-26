@@ -311,7 +311,7 @@ function rain_updateIdle() {
 	var myHeight = this.sprites[activeEntity.id].getHeight();
 	var heightDiff = (this.position.y  - this.data.startingY);
 	
-	if(!input.isKeyDown(KEY_SPACE)) {
+	if(!Input.isKeyDown(KEY_SPACE)) {
 		this.data.makeRainAbove = false;
 	} else if( makeRainAbove && activeEntity.name == "cloud" && (heightDiff % myHeight) == 0 ) {
 		var rainEnt = Entities.types['rain'].clone();					
