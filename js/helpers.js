@@ -33,13 +33,6 @@ function trimFilename(input)
 	return input.substr(0, input.lastIndexOf('.')) || input;
 }
 
-var DEBUG_MODE = true;
-var MAX_X=800;
-var MAX_Y=600;
-var MIN_X=0;
-var MIN_Y=0;
-var GROUND_Y = MAX_Y-200;
-
 function debug()
 {
 	if(DEBUG_MODE && exists(console) && exists(console.log))
