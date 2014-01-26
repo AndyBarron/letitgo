@@ -124,7 +124,7 @@ function processClick(coords)
 		if (ent == activeEntity) continue;
 
 		var hit = ent.hit(id,coords.x,coords.y);
-		if ( hit )
+		if ( hit && ent.id > -1 && ent.id < MAX_ID)
 		{
 			Sounds.play('zap');
 			activeEntity = ent;
