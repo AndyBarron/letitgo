@@ -430,8 +430,8 @@ function rootNode_updateIdle() {
 		
 		var activationDistance = 5;
 		for(var i=0; i<rainEnts.length; i++) {
-			if( (Math.Abs(rainEnts[i].position.x - this.position.x) < activationDistance ) &&
-				( Math.Abs(rainEnts[i].position.y - this.position.y) < activationDistance ) ) {
+			if( (Math.abs(rainEnts[i].position.x - this.position.x) < activationDistance ) &&
+				( Math.abs(rainEnts[i].position.y - this.position.y) < activationDistance ) ) {
 					this.data.rainAmt++;
 			}
 		}
