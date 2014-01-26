@@ -92,7 +92,8 @@ Entities.init = function()
 		doKeyPress: tree_doKeyPress,
 		updateIdle: function(){},
 		updateActive: function(){},
-		clickable: true
+		clickable: true,
+		initData:tree_initData
     });
 
     Entities.types['acorn'] = new Entity({
@@ -101,7 +102,8 @@ Entities.init = function()
 		doKeyPress: tree_doKeyPress,
 		updateIdle:function(){},
 		updateActive:function(){},
-		clickable: true
+		clickable: true,
+		initData:acorn_initData
     });
 
     Entities.types['cloud'] = new Entity({
