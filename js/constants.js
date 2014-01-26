@@ -29,3 +29,5 @@ MAX_ID = 5;
 ROOT_NODE_REQUIRED_RAIN = 1;
 
 ERROR_IMAGE_PATH = 'img/error.png';
+
+ACORN_BIG_SIZE = 10;
