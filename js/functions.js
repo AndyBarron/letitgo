@@ -272,33 +272,31 @@ function cloud_doKeyPress(code) {
 }
 
 function cloud_updateIdle() {
-	
-	var addAmt = Math.random()*CLOUD_MOVE_SPEED/5;
-	var maxVel = CLOUD_MOVE_SPEED/3;
-	
-	if(Math.random() < 0.1) {
-		this.data.accelLeft = !this.data.accelLeft;
-	}
-	
-	if(this.data.accelLeft) addAmt *= -1;
-	
-	
-	if(Math.abs(this.data.velocity_x) > maxVel) {
-		if(this.data.velocity_x > 0) {
-			this.data.velocity_x = maxVel;
-		} else {
-			this.data.velocity_x = -maxVel;
+	this.timeToSwitch -= delta;
+	if(this.timeToSwitch <= 0)
+	{
+		this.timeToSwitch += 5+(Math.random()*5);
+		var rand = Math.random();
+		var chanceToMove = .75;
+		if(rand < chanceToMove/2 )
+		{
+			this.moving = -1;
+		}
+		else if (rand < chanceToMove)
+		{
+			this.moving = 1;
+		}
+		else
+		{
+			this.moving = 0;
 		}
 	}
-	
-	this.data.velocity_x += addAmt;
-	var newLoc = (this.position.x + this.data.velocity_x);
-	if( newLoc < MAX_X && newLoc > MIN_X )
-		this.position.x += this.data.velocity_x;
-	else {
-		this.data.velocity_x *= -1;
-		this.data.accelLeft = !this.data.accelLeft;
+	else
+	{
+		this.position.x += CLOUD_MOVE_SPEED*delta*this.moving;
 	}
+	if(this.position.x < MIN_X) this.position.x = MIN_X;
+	if(this.position.x > MAX_X) this.position.x = MAX_X;
 }
 
 function cloud_updateActive() {
@@ -308,8 +306,8 @@ function cloud_updateActive() {
 }
 
 function cloud_initData() {
-	this.data.velocity_x = 0;
-	this.data.accelLeft = false;
+	this.moving = 0;
+	this.timeToSwitch = 0;
 }
 
 function emptyFunction() {}
