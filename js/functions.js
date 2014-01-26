@@ -144,7 +144,7 @@ function tree_doKeyPress ( code ) {
 		if(this.data.right_count - this.data.left_count < 2)
 		    this.data.right_count++;
 	    if(this.data.right_count > 10 && this.data.left_count > 10){
-		var t = new Enitity({initData: tree_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
+		var t = new Entity({clickable: true, initData: tree_initData,doKeyPress : tree_doKeyPress, updateIdle:this.updateIdle, updateActive: this.updateActive, drawPost:this.drawPost, active:true, id:this.id, name:"tree"});
 	    t.position.x = this.position.x;
 	    t.position.y = this.position.y;
 	    var j;
@@ -227,15 +227,7 @@ function tree_doKeyPress ( code ) {
 }
 
 function sun_doKeyPress( code ){
-    if ( code == KEY_LEFT || code == KEY_A ){
-		this.data.target.position.x -= 10;
-    }else  if ( code == KEY_RIGHT || code == KEY_D ){
-		this.data.target.position.x += 10;
-    }else  if ( code == KEY_UP || code == KEY_W ){
-		this.data.target.position.y -= 10;
-    }else  if ( code == KEY_DOWN || code == KEY_S ){
-		this.data.target.position.y += 10;
-    }else if  (code == KEY_SPACE){
+    if  (code == KEY_SPACE){
 		for(var i = 0; i < entities.length; i++){
 	    	if(entities[i].name == "sapling" && distance(entities[i], this.data.target) < 27){
 			entities[i].data.havingBeenShined = true;
@@ -253,6 +245,10 @@ function sun_updateActive() {
 		var ray = new Entity({name:"ray", id:84343, updateIdle:emptyFunction, updateActive:emptyFunction, initData:emptyFunction, doKeyPress:emptyFunction, drawPost:emptyFunction, active:false});
 		entities.push(ray);
 		this.data.target = ray;
+	}
+	else {
+		this.data.target.position.x = Input.mouse.x;
+		this.data.target.position.y = Input.mouse.y;
 	}
 }
 

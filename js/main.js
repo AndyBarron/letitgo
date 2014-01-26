@@ -113,7 +113,7 @@ storm.position = {x: Math.random() * MAX_X, y: 170}
 /////////////////////////////////////////
 
 var entities = [sn, noob, storm, acorn, bird, squirrel];
-var activeEntity = tree;
+var activeEntity = acorn;
 
 function doGameLoop()
 {
