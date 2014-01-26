@@ -81,6 +81,7 @@ function tree_doKeyPress ( code ) {
 		
 		this.removed = true;
 		entities.splice(i, 0, t);
+		activeEntity = t;
 		
 	    }
 	}
